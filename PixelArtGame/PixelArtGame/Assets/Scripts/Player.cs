@@ -8,19 +8,34 @@ public class Player : MonoBehaviour {
 
 	Vector2 movement;
 	Rigidbody2D rb;
-	GameObject attackParticle;
-	ParticleSystem attackParticleSystem;
+	Attack attackScript;
+	private float attackCharge;
 
 	void Start() {
 		rb = GetComponent<Rigidbody2D>();
-		attackParticle = GameObject.Find("AttackParticle");
-		attackParticleSystem = attackParticle.GetComponent<ParticleSystem>();
+		attackScript = GetComponentInChildren<Attack>();
 	}
 
 	void Update() {
 		Movement();
-		Attack();
-		
+
+		//Attack
+		if (Input.GetKeyDown(KeyCode.Mouse0)) {
+			attackScript.SwordParticles();
+			attackScript.Invoke("HitEnemy", attackScript.hitTime);
+		}
+		if (Input.GetKey(KeyCode.LeftShift)) {
+			attackCharge += Time.deltaTime;
+			if(attackCharge >= 2) {
+				if(Input.GetKeyDown(KeyCode.Mouse0)) {
+					//Dash attack
+				}
+			}
+		}
+		else {
+			attackCharge = 0;
+		}
+
 	}
 
 	void FixedUpdate() {
@@ -35,20 +50,5 @@ public class Player : MonoBehaviour {
 		movement *= speed / 100;
 		movement.x += transform.position.x;
 		movement.y += transform.position.y;
-	}
-
-	void Attack() {
-		if (Input.GetKeyDown(KeyCode.Mouse0)) {
-			Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-			Vector2 partDir = new Vector2(mousePos.x - transform.position.x, mousePos.y - transform.position.y).normalized;
-
-			Vector2 partPos = new Vector2(partDir.x + transform.position.x, partDir.y + transform.position.y);
-			attackParticle.transform.position = partPos;
-
-			var partMain = attackParticleSystem.main;
-			partMain.startRotation = Mathf.Atan2(partDir.x, partDir.y) - 2.25f;
-
-			attackParticleSystem.Play();
-		}
 	}
 }
