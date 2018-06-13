@@ -4,7 +4,15 @@ using UnityEngine;
 
 public class Player : MonoBehaviour {
 
+	public enum PlayerState : short {
+		Walking,
+		Dashing,
+		Attacking
+	}
+	public PlayerState playerState = PlayerState.Walking;
+
 	public float speed;
+	public Vector2 facing;
 
 	Vector2 movement;
 	Rigidbody2D rb;
@@ -17,38 +25,44 @@ public class Player : MonoBehaviour {
 	}
 
 	void Update() {
-		Movement();
+		facing = new Vector2(GameManager.instance.mousePos.x - transform.position.x, GameManager.instance.mousePos.y - transform.position.y).normalized;
+		movement = Vector2.zero;
 
-		//Attack
+		switch (playerState) {
+			case PlayerState.Walking:
+				Movement();
+				break;
+		}
+
+		Attack();
+	}
+
+	void FixedUpdate() {
+		rb.AddForce(movement);
+	}
+
+	private void Movement() {
+		movement = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+		if (movement.magnitude > 1) {
+			movement = movement.normalized;
+		}
+		movement *= speed;
+	}
+
+	private void Attack() {
 		if (Input.GetKeyDown(KeyCode.Mouse0)) {
-			attackScript.SwordParticles();
-			attackScript.Invoke("HitEnemy", attackScript.hitTime);
+			attackScript.SimpleAttack();
 		}
 		if (Input.GetKey(KeyCode.LeftShift)) {
 			attackCharge += Time.deltaTime;
-			if(attackCharge >= 2) {
-				if(Input.GetKeyDown(KeyCode.Mouse0)) {
-					//Dash attack
+			if (attackCharge >= 2) {
+				if (Input.GetKeyDown(KeyCode.Mouse0)) {
+					attackScript.DashAttack();
 				}
 			}
 		}
 		else {
 			attackCharge = 0;
 		}
-
-	}
-
-	void FixedUpdate() {
-		rb.MovePosition(movement);
-	}
-
-	void Movement() {
-		movement = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
-		if (movement.magnitude > 1) {
-			movement = movement.normalized;
-		}
-		movement *= speed / 100;
-		movement.x += transform.position.x;
-		movement.y += transform.position.y;
 	}
 }

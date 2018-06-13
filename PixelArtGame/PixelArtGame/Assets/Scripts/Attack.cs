@@ -4,19 +4,35 @@ using UnityEngine;
 
 public class Attack : MonoBehaviour {
 
-	public float hitTime;
+	public float hitTime, attackTime;
 
 	ParticleSystem attackParticleSystem;
 	List<Enemy> enemiesInRange = new List<Enemy>();
+	Player playerScript;
+	Rigidbody2D rb;
 
 	void Start() {
 		attackParticleSystem = GetComponentInChildren<ParticleSystem>();
+		playerScript = transform.parent.gameObject.GetComponent<Player>();
+		rb = playerScript.GetComponent<Rigidbody2D>();
 	}
 
-	public void SwordParticles() {
-		Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-		Vector2 facing = new Vector2(mousePos.x - transform.position.x, mousePos.y - transform.position.y).normalized;
-		float facingRad = Mathf.Atan2(facing.x, facing.y);
+	public void SimpleAttack() {
+		playerScript.playerState = Player.PlayerState.Attacking;
+
+		SwordParticles();
+		Invoke("HitEnemy", hitTime);
+		Invoke("EndAttack", attackTime);
+	}
+
+	public void DashAttack() {
+		playerScript.playerState = Player.PlayerState.Attacking;
+
+		rb.AddForce(playerScript.facing * 100, ForceMode2D.Impulse);
+	}
+
+	private void SwordParticles() {
+		float facingRad = Mathf.Atan2(playerScript.facing.x, playerScript.facing.y);
 
 		var partMain = attackParticleSystem.main;
 		partMain.startRotation = facingRad - 2.25f; //-2.25 rad ~ -130 deg, to to fix rotation
@@ -26,7 +42,7 @@ public class Attack : MonoBehaviour {
 		attackParticleSystem.Play();
 	}
 
-	void HitEnemy() {
+	private void HitEnemy() {
 		for (int i = enemiesInRange.Count - 1; i > -1; i--) {
 			if (enemiesInRange[i] == null) { //Removes enemy from list if it doesn't exist
 				enemiesInRange.RemoveAt(i);
@@ -36,6 +52,10 @@ public class Attack : MonoBehaviour {
 				enemiesInRange.RemoveAt(i);
 			}
 		}
+	}
+
+	void EndAttack() {
+		playerScript.playerState = Player.PlayerState.Walking;
 	}
 
 	void OnTriggerEnter2D(Collider2D collision) {

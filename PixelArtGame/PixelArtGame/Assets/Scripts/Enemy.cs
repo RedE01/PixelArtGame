@@ -5,6 +5,7 @@ using UnityEngine;
 public class Enemy : MonoBehaviour {
 
 	public int health;
+	public int damageKnockback;
 
 	GameObject target;
 	Rigidbody2D rb;
@@ -17,7 +18,7 @@ public class Enemy : MonoBehaviour {
 	public bool Damage(Vector2 attackPosition, int damageAmmount) {
 		health -= damageAmmount;
 		Vector2 dmgVector = new Vector2(transform.position.x - attackPosition.x, transform.position.y - attackPosition.y).normalized;
-		rb.AddForce(dmgVector * 100);
+		rb.AddForce(dmgVector * damageKnockback);
 
 		if(health <= 0) {
 			Destroy(gameObject, .5f);
