@@ -10,11 +10,13 @@ public class Attack : MonoBehaviour {
 	List<Enemy> enemiesInRange = new List<Enemy>();
 	Player playerScript;
 	Rigidbody2D rb;
+	CameraScript cameraScript;
 
 	void Start() {
 		attackParticleSystem = GetComponentInChildren<ParticleSystem>();
 		playerScript = transform.parent.gameObject.GetComponent<Player>();
 		rb = playerScript.GetComponent<Rigidbody2D>();
+		cameraScript = Camera.main.GetComponent<CameraScript>();
 	}
 
 	public void SimpleAttack() {
@@ -51,6 +53,7 @@ public class Attack : MonoBehaviour {
 			if (enemiesInRange[i].Damage(transform.position, 5)) { //Deals damage to enemy and removes from list if destroyed
 				enemiesInRange.RemoveAt(i);
 			}
+			cameraScript.StartShake(.5f, 5, .05f);
 		}
 	}
 

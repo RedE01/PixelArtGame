@@ -11,13 +11,13 @@ public class Player : MonoBehaviour {
 	}
 	public PlayerState playerState = PlayerState.Walking;
 
-	public float speed;
+	public float speed, dashChargeupTime;
 	public Vector2 facing;
 
 	Vector2 movement;
 	Rigidbody2D rb;
 	Attack attackScript;
-	private float attackCharge;
+	private float dashChargeup;
 
 	void Start() {
 		rb = GetComponent<Rigidbody2D>();
@@ -31,10 +31,9 @@ public class Player : MonoBehaviour {
 		switch (playerState) {
 			case PlayerState.Walking:
 				Movement();
+				Attack();
 				break;
 		}
-
-		Attack();
 	}
 
 	void FixedUpdate() {
@@ -54,15 +53,16 @@ public class Player : MonoBehaviour {
 			attackScript.SimpleAttack();
 		}
 		if (Input.GetKey(KeyCode.LeftShift)) {
-			attackCharge += Time.deltaTime;
-			if (attackCharge >= 2) {
+			dashChargeup += Time.deltaTime;
+			if (dashChargeup >= dashChargeupTime) {
 				if (Input.GetKeyDown(KeyCode.Mouse0)) {
 					attackScript.DashAttack();
+					dashChargeup = 0;
 				}
 			}
 		}
 		else {
-			attackCharge = 0;
+			dashChargeup = 0;
 		}
 	}
 }
