@@ -7705,6 +7705,7 @@ MonoBehaviour:
   playerState: 0
   speed: 200
   dashChargeupTime: 1
+  health: 100
   facing: {x: 0, y: 0}
 --- !u!70 &2126744007
 CapsuleCollider2D:

@@ -11,17 +11,19 @@ public class Player : MonoBehaviour {
 	}
 	public PlayerState playerState = PlayerState.Walking;
 
-	public float speed, dashChargeupTime;
+	public float speed, dashChargeupTime, health;
 	public Vector2 facing;
 
 	Vector2 movement;
 	Rigidbody2D rb;
 	Attack attackScript;
+	CameraScript cameraScript;
 	private float dashChargeup;
 
 	void Start() {
 		rb = GetComponent<Rigidbody2D>();
 		attackScript = GetComponentInChildren<Attack>();
+		cameraScript = Camera.main.GetComponent<CameraScript>();
 	}
 
 	void Update() {
@@ -38,6 +40,16 @@ public class Player : MonoBehaviour {
 
 	void FixedUpdate() {
 		rb.AddForce(movement);
+	}
+
+	public void Damage(Vector2 damagePos, float damageKnockback) {
+		health--;
+		rb.AddForce(((Vector2)transform.position - damagePos) * damageKnockback, ForceMode2D.Impulse);
+		cameraScript.StartShake(1, 10, 0.08f);
+
+		if(health <= 0) {
+			Debug.Log("GAME OVER");
+		}
 	}
 
 	private void Movement() {
@@ -65,4 +77,5 @@ public class Player : MonoBehaviour {
 			dashChargeup = 0;
 		}
 	}
+
 }

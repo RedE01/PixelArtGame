@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 212508114020981610}
   - component: {fileID: 70255864720712556}
   - component: {fileID: 50143380977021616}
-  - component: {fileID: 114152747802540372}
+  - component: {fileID: 114766308466180034}
   m_Layer: 0
   m_Name: TempEnemy
   m_TagString: Enemy
@@ -78,7 +78,7 @@ CapsuleCollider2D:
   m_Offset: {x: -0.029231235, y: -0.34957668}
   m_Size: {x: 0.6297417, y: 0.30084816}
   m_Direction: 1
---- !u!114 &114152747802540372
+--- !u!114 &114766308466180034
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -86,12 +86,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 1197140675989390}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ba765995e9ae06a4696eb590fa6e7956, type: 3}
+  m_Script: {fileID: 11500000, guid: b04be116b6a23fa4ab78d9a77ab49989, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyState: 0
   health: 20
-  damageKnockback: 2000
-  speed: 20
+  damageKnockback: 40
+  normalSpeed: 20
+  chasingRange: 4
+  attackRange: 1
+  attackKnockback: 20
+  idleWalkDistance: 4
+  hitTime: 1
 --- !u!212 &212508114020981610
 SpriteRenderer:
   m_ObjectHideFlags: 1
