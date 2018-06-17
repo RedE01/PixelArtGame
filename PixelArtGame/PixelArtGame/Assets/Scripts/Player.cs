@@ -14,16 +14,18 @@ public class Player : MonoBehaviour {
 	public float speed, dashChargeupTime, health;
 	public Vector2 facing;
 
+	HealthUI healthbar;
 	Vector2 movement;
 	Rigidbody2D rb;
 	Attack attackScript;
 	CameraScript cameraScript;
-	private float dashChargeup;
+	float dashChargeup;
 
 	void Start() {
 		rb = GetComponent<Rigidbody2D>();
 		attackScript = GetComponentInChildren<Attack>();
 		cameraScript = Camera.main.GetComponent<CameraScript>();
+		healthbar = GameObject.FindGameObjectWithTag("Healthbar").GetComponent<HealthUI>();
 	}
 
 	void Update() {
@@ -42,10 +44,11 @@ public class Player : MonoBehaviour {
 		rb.AddForce(movement);
 	}
 
-	public void Damage(Vector2 damagePos, float damageKnockback) {
-		health--;
+	public void Damage(float damageAmmount, Vector2 damagePos, float damageKnockback) {
+		health -= damageAmmount;
 		rb.AddForce(((Vector2)transform.position - damagePos) * damageKnockback, ForceMode2D.Impulse);
 		cameraScript.StartShake(1, 10, 0.08f);
+		healthbar.UpdateHealthBar(health);
 
 		if(health <= 0) {
 			Debug.Log("GAME OVER");
@@ -66,6 +69,10 @@ public class Player : MonoBehaviour {
 		}
 		if (Input.GetKey(KeyCode.LeftShift)) {
 			dashChargeup += Time.deltaTime;
+			if(Input.GetKeyDown(KeyCode.Mouse0)) {
+				dashChargeup = 0;
+			}
+
 			if (dashChargeup >= dashChargeupTime) {
 				if (Input.GetKeyDown(KeyCode.Mouse0)) {
 					attackScript.DashAttack();

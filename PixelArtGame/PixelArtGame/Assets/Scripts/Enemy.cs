@@ -63,7 +63,7 @@ public abstract class Enemy : MonoBehaviour {
 				damageCounter += Time.deltaTime;
 
 				if(damageCounter > hitTime) {
-					playerScript.Damage(transform.position, attackKnockback);
+					playerScript.Damage(10, transform.position, attackKnockback);
 					damageCounter = 0;
 				}
 
