@@ -113,6 +113,92 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &70644499
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 70644500}
+  - component: {fileID: 70644502}
+  - component: {fileID: 70644501}
+  - component: {fileID: 70644503}
+  m_Layer: 5
+  m_Name: CoinCounter
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &70644500
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 70644499}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 104371635}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 1, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: -40, y: -25}
+  m_SizeDelta: {x: 500, y: 500}
+  m_Pivot: {x: 1, y: 1}
+--- !u!114 &70644501
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 70644499}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_RaycastTarget: 0
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_FontData:
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_FontSize: 90
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 5
+    m_MaxSize: 90
+    m_Alignment: 2
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: 000
+--- !u!222 &70644502
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 70644499}
+--- !u!114 &70644503
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 70644499}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a5e8beca7903a84a928ac815195051c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &104371631
 GameObject:
   m_ObjectHideFlags: 0
@@ -199,6 +285,7 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 431368962}
+  - {fileID: 70644500}
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -478,11 +565,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4835699463548204, guid: bc9cae392aad7cd46b0c9f03344fec9e, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 4.04
+      value: 7.0359993
       objectReference: {fileID: 0}
     - target: {fileID: 4835699463548204, guid: bc9cae392aad7cd46b0c9f03344fec9e, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 0.52
+      value: 1.016773
       objectReference: {fileID: 0}
     - target: {fileID: 4835699463548204, guid: bc9cae392aad7cd46b0c9f03344fec9e, type: 2}
       propertyPath: m_LocalPosition.z
@@ -525,11 +612,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4835699463548204, guid: bc9cae392aad7cd46b0c9f03344fec9e, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 3.2440004
+      value: 6.24
       objectReference: {fileID: 0}
     - target: {fileID: 4835699463548204, guid: bc9cae392aad7cd46b0c9f03344fec9e, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 2.033227
+      value: 2.53
       objectReference: {fileID: 0}
     - target: {fileID: 4835699463548204, guid: bc9cae392aad7cd46b0c9f03344fec9e, type: 2}
       propertyPath: m_LocalPosition.z
@@ -5325,7 +5412,7 @@ GameObject:
   - component: {fileID: 1900236951}
   - component: {fileID: 1900236953}
   m_Layer: 0
-  m_Name: Tilemap
+  m_Name: Ground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5376,9 +5463,9 @@ TilemapRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: -10
+  m_SortingLayerID: 1160951411
+  m_SortingLayer: -1
+  m_SortingOrder: 0
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
   m_MaxChunkCount: 16
@@ -7972,7 +8059,6 @@ MonoBehaviour:
   playerState: 0
   speed: 200
   dashChargeupTime: 1
-  health: 100
   facing: {x: 0, y: 0}
 --- !u!70 &2126744007
 CapsuleCollider2D:

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Enemy : MonoBehaviour {
+public abstract class Enemy : MovableObject {
 
 	public enum EnemyState {
 		Idle,
@@ -13,6 +13,8 @@ public abstract class Enemy : MonoBehaviour {
 
 	public int health, damageKnockback;
 	public float normalSpeed, chasingRange, attackRange, attackKnockback, idleWalkDistance, hitTime;
+	public GameObject pickup;
+	public Item drop;
 
 	protected float speed;
 	protected GameObject player;
@@ -23,11 +25,13 @@ public abstract class Enemy : MonoBehaviour {
 
 	float damageCounter = 0;
 
-	void Start() {
+	protected override void Start() {
 		speed = normalSpeed;
 		player = GameObject.FindGameObjectWithTag("Player");
 		playerScript = player.GetComponent<Player>();
 		rb = GetComponent<Rigidbody2D>();
+
+		base.Start();
 	}
 
 	void Update() {
@@ -69,6 +73,7 @@ public abstract class Enemy : MonoBehaviour {
 
 				if (Vector2.Distance(transform.position, player.transform.position) > attackRange) {
 					enemyState = EnemyState.Chasing;
+					damageCounter = 0;
 				}
 				break;
 		}
@@ -84,6 +89,8 @@ public abstract class Enemy : MonoBehaviour {
 		rb.AddForce(dmgVector * damageKnockback, ForceMode2D.Impulse);
 
 		if(health <= 0) {
+			GameObject p = Instantiate(pickup, transform.position, Quaternion.identity);
+			p.GetComponent<Pickup>().item = drop;
 			Destroy(gameObject, .5f);
 			return true;
 		}
@@ -97,5 +104,9 @@ public abstract class Enemy : MonoBehaviour {
 	void SetRandomTarget(float maxDist) {
 		target.x = Random.Range(0, maxDist) + transform.position.x - maxDist * 0.5f;
 		target.y = Random.Range(0, maxDist) + transform.position.y - maxDist * 0.5f;
+	}
+
+	protected override SpriteRenderer SetRenderer() {
+		return GetComponent<SpriteRenderer>();
 	}
 }

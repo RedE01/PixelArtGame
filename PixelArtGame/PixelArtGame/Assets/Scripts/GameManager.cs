@@ -8,6 +8,9 @@ public class GameManager : MonoBehaviour {
 
 	public Vector2 mousePos;
 
+	public float health = 100;
+	public float coins = 0;
+
 	void Awake() {
 		if(instance == null) {
 			instance = this;
@@ -16,6 +19,9 @@ public class GameManager : MonoBehaviour {
 			Destroy(gameObject);
 		}
 		DontDestroyOnLoad(gameObject);
+
+		health = 100;
+		coins = 0;
 	}
 
 	void Update () {

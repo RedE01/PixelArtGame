@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour {
+public class Player : MovableObject {
 
 	public enum PlayerState : short {
 		Walking,
@@ -11,7 +11,7 @@ public class Player : MonoBehaviour {
 	}
 	public PlayerState playerState = PlayerState.Walking;
 
-	public float speed, dashChargeupTime, health;
+	public float speed, dashChargeupTime;
 	public Vector2 facing;
 
 	HealthUI healthbar;
@@ -21,11 +21,13 @@ public class Player : MonoBehaviour {
 	CameraScript cameraScript;
 	float dashChargeup;
 
-	void Start() {
+	protected override void Start() {
 		rb = GetComponent<Rigidbody2D>();
 		attackScript = GetComponentInChildren<Attack>();
 		cameraScript = Camera.main.GetComponent<CameraScript>();
 		healthbar = GameObject.FindGameObjectWithTag("Healthbar").GetComponent<HealthUI>();
+
+		base.Start();
 	}
 
 	void Update() {
@@ -45,12 +47,12 @@ public class Player : MonoBehaviour {
 	}
 
 	public void Damage(float damageAmmount, Vector2 damagePos, float damageKnockback) {
-		health -= damageAmmount;
+		GameManager.instance.health -= damageAmmount;
 		rb.AddForce(((Vector2)transform.position - damagePos) * damageKnockback, ForceMode2D.Impulse);
 		cameraScript.StartShake(1, 10, 0.08f);
-		healthbar.UpdateHealthBar(health);
+		healthbar.UpdateHealthBar(GameManager.instance.health);
 
-		if(health <= 0) {
+		if(GameManager.instance.health <= 0) {
 			Debug.Log("GAME OVER");
 		}
 	}
@@ -83,6 +85,10 @@ public class Player : MonoBehaviour {
 		else {
 			dashChargeup = 0;
 		}
+	}
+
+	protected override SpriteRenderer SetRenderer() {
+		return GetComponent<SpriteRenderer>();
 	}
 
 }

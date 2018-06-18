@@ -98,6 +98,8 @@ MonoBehaviour:
   attackKnockback: 20
   idleWalkDistance: 4
   hitTime: 1
+  pickup: {fileID: 1494308221705008, guid: c92662b48a1739f4287f1f3581a8c112, type: 2}
+  drop: {fileID: 11400000, guid: 00708ff22dfd5e24e8fd8085cea5a8b9, type: 2}
 --- !u!212 &212508114020981610
 SpriteRenderer:
   m_ObjectHideFlags: 1
