@@ -25,13 +25,11 @@ public abstract class Enemy : MovableObject {
 
 	float damageCounter = 0;
 
-	protected override void Start() {
+	void Start() {
 		speed = normalSpeed;
 		player = GameObject.FindGameObjectWithTag("Player");
 		playerScript = player.GetComponent<Player>();
 		rb = GetComponent<Rigidbody2D>();
-
-		base.Start();
 	}
 
 	void Update() {
@@ -104,9 +102,5 @@ public abstract class Enemy : MovableObject {
 	void SetRandomTarget(float maxDist) {
 		target.x = Random.Range(0, maxDist) + transform.position.x - maxDist * 0.5f;
 		target.y = Random.Range(0, maxDist) + transform.position.y - maxDist * 0.5f;
-	}
-
-	protected override SpriteRenderer SetRenderer() {
-		return GetComponent<SpriteRenderer>();
 	}
 }

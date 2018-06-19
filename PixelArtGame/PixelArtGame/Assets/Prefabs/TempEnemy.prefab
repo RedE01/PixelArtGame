@@ -37,7 +37,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1197140675989390}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.04, y: 0.52, z: 0}
+  m_LocalPosition: {x: 6.24, y: 2.53, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -89,6 +89,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b04be116b6a23fa4ab78d9a77ab49989, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  objectSpriteRenderer: {fileID: 212508114020981610}
+  yFeetPos: -0.4
   enemyState: 0
   health: 20
   damageKnockback: 40

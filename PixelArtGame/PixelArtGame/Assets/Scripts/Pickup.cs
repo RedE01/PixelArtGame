@@ -11,7 +11,7 @@ public class Pickup : MovableObject {
 	GameObject pickupObj, shadowObj;
 	SpriteRenderer shadowRenderer, pickupRenderer;
 
-	protected override void Start() {
+	void Start() {
 		pickupObj = transform.Find("PickupSprite").gameObject;
 		pickupRenderer = pickupObj.GetComponent<SpriteRenderer>();
 		pickupRenderer.sprite = item.sprite;
@@ -21,8 +21,6 @@ public class Pickup : MovableObject {
 		shadowRenderer.sprite = shadow;
 
 		GetComponent<CircleCollider2D>().radius = item.pickupRadius;
-
-		base.Start();
 	}
 
 	void Update() {
@@ -38,9 +36,5 @@ public class Pickup : MovableObject {
 
 			Destroy(gameObject);
 		}
-	}
-
-	protected override SpriteRenderer SetRenderer() {
-		return pickupRenderer;
 	}
 }

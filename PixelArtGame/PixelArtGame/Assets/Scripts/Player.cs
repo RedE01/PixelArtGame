@@ -12,6 +12,8 @@ public class Player : MovableObject {
 	public PlayerState playerState = PlayerState.Walking;
 
 	public float speed, dashChargeupTime;
+
+	[HideInInspector]
 	public Vector2 facing;
 
 	HealthUI healthbar;
@@ -21,13 +23,11 @@ public class Player : MovableObject {
 	CameraScript cameraScript;
 	float dashChargeup;
 
-	protected override void Start() {
+	void Start() {
 		rb = GetComponent<Rigidbody2D>();
 		attackScript = GetComponentInChildren<Attack>();
 		cameraScript = Camera.main.GetComponent<CameraScript>();
 		healthbar = GameObject.FindGameObjectWithTag("Healthbar").GetComponent<HealthUI>();
-
-		base.Start();
 	}
 
 	void Update() {
@@ -86,9 +86,4 @@ public class Player : MovableObject {
 			dashChargeup = 0;
 		}
 	}
-
-	protected override SpriteRenderer SetRenderer() {
-		return GetComponent<SpriteRenderer>();
-	}
-
 }
