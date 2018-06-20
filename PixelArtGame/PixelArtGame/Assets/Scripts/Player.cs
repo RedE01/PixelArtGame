@@ -71,15 +71,16 @@ public class Player : MovableObject {
 		}
 		if (Input.GetKey(KeyCode.LeftShift)) {
 			dashChargeup += Time.deltaTime;
-			if(Input.GetKeyDown(KeyCode.Mouse0)) {
-				dashChargeup = 0;
-			}
 
 			if (dashChargeup >= dashChargeupTime) {
 				if (Input.GetKeyDown(KeyCode.Mouse0)) {
 					attackScript.DashAttack();
 					dashChargeup = 0;
 				}
+			}
+
+			if (Input.GetKeyDown(KeyCode.Mouse0) && dashChargeup < dashChargeupTime) {
+				dashChargeup = 0;
 			}
 		}
 		else {
