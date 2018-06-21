@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour {
 
 	public Vector2 mousePos;
 
+	public int sortingOrderPrecision = -100;
 	public float health = 100;
 	public float coins = 0;
 
@@ -20,6 +21,7 @@ public class GameManager : MonoBehaviour {
 		}
 		DontDestroyOnLoad(gameObject);
 
+		sortingOrderPrecision = -100;
 		health = 100;
 		coins = 0;
 	}

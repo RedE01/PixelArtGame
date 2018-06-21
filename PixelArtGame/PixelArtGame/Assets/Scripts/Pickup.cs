@@ -10,6 +10,7 @@ public class Pickup : MovableObject {
 
 	GameObject pickupObj, shadowObj;
 	SpriteRenderer shadowRenderer, pickupRenderer;
+	Inventory inventory;
 
 	void Start() {
 		pickupObj = transform.Find("PickupSprite").gameObject;
@@ -21,6 +22,8 @@ public class Pickup : MovableObject {
 		shadowRenderer.sprite = shadow;
 
 		GetComponent<CircleCollider2D>().radius = item.pickupRadius;
+
+		inventory = GameObject.FindGameObjectWithTag("Player").GetComponent<Inventory>();
 	}
 
 	void Update() {
@@ -32,9 +35,16 @@ public class Pickup : MovableObject {
 
 	void OnTriggerEnter2D(Collider2D collision) {
 		if(collision.gameObject.CompareTag("Player")) {
-			GameManager.instance.coins++;
+			for(int i = 0; i < inventory.itemSlots.GetLength(0); i++) {
+				if(inventory.itemSlots[i].item == null || (inventory.itemSlots[i].item == item && inventory.itemSlots[i].itemCount < inventory.maxItems)) {
+					inventory.itemSlots[i].item = item;
+					inventory.itemSlots[i].itemCount++;
+					inventory.UpdateInventory();
 
-			Destroy(gameObject);
+					Destroy(gameObject);
+					break;
+				}
+			}
 		}
 	}
 }

@@ -6,8 +6,10 @@ public class Player : MovableObject {
 
 	public enum PlayerState : short {
 		Walking,
+		Building,
 		Dashing,
-		Attacking
+		Attacking,
+		Menu
 	}
 	public PlayerState playerState = PlayerState.Walking;
 
@@ -20,6 +22,7 @@ public class Player : MovableObject {
 	Vector2 movement;
 	Rigidbody2D rb;
 	Attack attackScript;
+	Build buildScript;
 	CameraScript cameraScript;
 	float dashChargeup;
 
@@ -38,6 +41,13 @@ public class Player : MovableObject {
 			case PlayerState.Walking:
 				Movement();
 				Attack();
+				break;
+			case PlayerState.Building:
+				Movement();
+				Build();
+				break;
+			case PlayerState.Menu:
+				Movement();
 				break;
 		}
 	}
@@ -85,6 +95,12 @@ public class Player : MovableObject {
 		}
 		else {
 			dashChargeup = 0;
+		}
+	}
+
+	private void Build() {
+		if(Input.GetKeyDown(KeyCode.Mouse0)) {
+			buildScript.PlaceObject();
 		}
 	}
 }

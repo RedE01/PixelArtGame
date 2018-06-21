@@ -3,14 +3,15 @@
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 65651af5f72f3bb44ac7b9ce9b078460, type: 3}
-  m_Name: Coin
+  m_Name: Slime
   m_EditorClassIdentifier: 
-  name: Coin
-  sprite: {fileID: 21300000, guid: b3e462f193a7efa4f83edca565585741, type: 3}
+  name: 
+  sprite: {fileID: 21300000, guid: b51d513cde3324f4b80cfa421863e470, type: 3}
   pickupRadius: 0.4
+  itemCount: 1
