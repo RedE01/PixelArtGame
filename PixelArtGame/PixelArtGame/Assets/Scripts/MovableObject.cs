@@ -5,9 +5,8 @@ using UnityEngine;
 public abstract class MovableObject : MonoBehaviour {
 
 	public SpriteRenderer objectSpriteRenderer;
-	public float yFeetPos;
 	
 	void LateUpdate () {
-		objectSpriteRenderer.sortingOrder = (int)((transform.position.y + yFeetPos) * GameManager.instance.sortingOrderPrecision);
+		objectSpriteRenderer.sortingOrder = (int)((transform.position.y) * GameManager.instance.sortingOrderPrecision);
 	}
 }

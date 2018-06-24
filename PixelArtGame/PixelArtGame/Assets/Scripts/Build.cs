@@ -17,7 +17,7 @@ public class Build : MonoBehaviour {
 	}
 
 	public void PlaceObject() {
-		Vector3Int tilePos = new Vector3Int(Mathf.FloorToInt(transform.position.x), Mathf.FloorToInt(transform.position.y + playerScript.yFeetPos), Mathf.FloorToInt(transform.position.z));
+		Vector3Int tilePos = new Vector3Int(Mathf.FloorToInt(transform.position.x), Mathf.FloorToInt(transform.position.y), Mathf.FloorToInt(transform.position.z));
 		tilePos.x += Mathf.RoundToInt(playerScript.facing.x);
 		tilePos.y += Mathf.RoundToInt(playerScript.facing.y);
 		string tilePosYString = tilePos.y.ToString();
