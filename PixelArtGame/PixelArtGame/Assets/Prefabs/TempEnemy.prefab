@@ -90,7 +90,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectSpriteRenderer: {fileID: 212508114020981610}
-  yFeetPos: -0.4
   enemyState: 0
   health: 20
   damageKnockback: 40
@@ -147,4 +146,4 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
-  m_SpriteSortPoint: 0
+  m_SpriteSortPoint: 1
