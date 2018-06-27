@@ -77,24 +77,43 @@ public class Player : MovableObject {
 
 	private void Attack() {
 		if (Input.GetKeyDown(KeyCode.Mouse0)) {
-			attackScript.SimpleAttack();
+			if (!CheckUIClick()) {
+				attackScript.SimpleAttack();
+			}
 		}
 		if (Input.GetKey(KeyCode.LeftShift)) {
 			dashChargeup += Time.deltaTime;
 
 			if (dashChargeup >= dashChargeupTime) {
 				if (Input.GetKeyDown(KeyCode.Mouse0)) {
-					attackScript.DashAttack();
-					dashChargeup = 0;
+					if (!CheckUIClick()) {
+						attackScript.DashAttack();
+					}
 				}
 			}
 
 			if (Input.GetKeyDown(KeyCode.Mouse0) && dashChargeup < dashChargeupTime) {
-				dashChargeup = 0;
+				if (!CheckUIClick()) {
+					dashChargeup = 0;
+				}
 			}
 		}
 		else {
 			dashChargeup = 0;
+		}
+	}
+
+	private bool CheckUIClick() {
+		RaycastHit2D hit = Physics2D.Raycast((Input.mousePosition), Vector2.zero);
+
+		if(hit.collider == null) {
+			return false;
+		}
+		else if (hit.collider.gameObject.layer == 5) {
+			return true;
+		}
+		else {
+			return false;
 		}
 	}
 

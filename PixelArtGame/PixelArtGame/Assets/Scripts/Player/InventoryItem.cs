@@ -9,53 +9,63 @@ public class InventoryItem : MonoBehaviour {
 
 	[HideInInspector]
 	public int slotNumber;
+	public StorageContainer containerScript;
 
 	Inventory inventoryScript;
+	Hotbar hotbarScript;
 	RectTransform rTransform;
 
 	void Start() {
 		inventoryScript = GameObject.FindGameObjectWithTag("Player").GetComponent<Inventory>();
+		hotbarScript = inventoryScript.GetComponent<Hotbar>();
 		rTransform = GetComponent<RectTransform>();
 	}
 
 	public void FollowCursor() {
 		transform.position = Input.mousePosition;
 		transform.parent.SetAsLastSibling();
+		transform.parent.parent.SetAsLastSibling();
 	}
 
 	public void ItemRelease() {
 		RaycastHit2D hit = Physics2D.Raycast((Input.mousePosition), Vector2.zero);
 
-		if (hit.collider != null) {
-			PlaceItemInSlot();
-		}
-		else {
+		if (hit.collider == null) {
 			DropItem();
 		}
-		inventoryScript.UpdateInventory();
+		else if (hit.collider.name == "InventoryBackground" || hit.collider.name == "CharacterSlotBackground") {
+			PlaceItemInSlot(inventoryScript);
+		}
+		else if(hit.collider.name == "HotbarBackground") {
+			PlaceItemInSlot(hotbarScript);
+		}
+		containerScript.UpdateSlots();
 		rTransform.anchoredPosition = Vector2.zero;
 	}
 
-	void PlaceItemInSlot() {
+	void PlaceItemInSlot(StorageContainer contScript) {
 		Vector3 nearest = Vector2.zero;
 		int nearestSlotNumb = 0;
-		Vector3 offset = inventoryScript.itemSlots[slotNumber].slotRectTransform.sizeDelta * 0.5f;
+		Vector3 offset = containerScript.itemSlots[slotNumber].slotRectTransform.sizeDelta * 0.5f;
 		offset.y *= -1;
-		for (int i = 0; i < inventoryScript.itemSlots.Length; i++) {
-			if (Vector2.Distance(transform.position, inventoryScript.itemSlots[i].slotRectTransform.position + offset) < Vector2.Distance(transform.position, nearest + offset)) {
-				nearest = inventoryScript.itemSlots[i].slotRectTransform.position;
+		for (int i = 0; i < contScript.itemSlots.Length; i++) {
+			if (Vector2.Distance(transform.position, contScript.itemSlots[i].slotRectTransform.position + offset) < Vector2.Distance(transform.position, nearest + offset)) {
+				nearest = contScript.itemSlots[i].slotRectTransform.position;
 				nearestSlotNumb = i;
 			}
 		}
-		if (inventoryScript.itemSlots[nearestSlotNumb].item == null || (inventoryScript.itemSlots[nearestSlotNumb].item == inventoryScript.itemSlots[slotNumber].item && inventoryScript.itemSlots[nearestSlotNumb].itemCount < inventoryScript.maxItems)) {
-			if (nearestSlotNumb != slotNumber) {
-				inventoryScript.itemSlots[nearestSlotNumb].item = inventoryScript.itemSlots[slotNumber].item;
+		
+		if (contScript.itemSlots[nearestSlotNumb].item == null || (contScript.itemSlots[nearestSlotNumb].item == containerScript.itemSlots[slotNumber].item && contScript.itemSlots[nearestSlotNumb].itemCount < contScript.maxItems)) {
+			if (nearestSlotNumb != slotNumber || contScript != containerScript) {
+				contScript.itemSlots[nearestSlotNumb].item = containerScript.itemSlots[slotNumber].item;
 
-				inventoryScript.itemSlots[nearestSlotNumb].itemCount += inventoryScript.itemSlots[slotNumber].itemCount;
-				inventoryScript.itemSlots[slotNumber].itemCount = inventoryScript.itemSlots[nearestSlotNumb].itemCount - inventoryScript.maxItems;
+				contScript.itemSlots[nearestSlotNumb].itemCount += containerScript.itemSlots[slotNumber].itemCount;
+				containerScript.itemSlots[slotNumber].itemCount = contScript.itemSlots[nearestSlotNumb].itemCount - inventoryScript.maxItems;
 
-				if (inventoryScript.itemSlots[nearestSlotNumb].itemCount >= inventoryScript.maxItems) inventoryScript.itemSlots[nearestSlotNumb].itemCount = inventoryScript.maxItems;
-				if (inventoryScript.itemSlots[slotNumber].itemCount <= 0) inventoryScript.itemSlots[slotNumber].item = null;
+				if (contScript.itemSlots[nearestSlotNumb].itemCount >= contScript.maxItems) contScript.itemSlots[nearestSlotNumb].itemCount = contScript.maxItems;
+				if (containerScript.itemSlots[slotNumber].itemCount <= 0) containerScript.itemSlots[slotNumber].item = null;
+
+				contScript.UpdateSlots();
 			}
 		}
 	}

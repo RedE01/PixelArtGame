@@ -27,5 +27,8 @@ public class PlayerHand : MonoBehaviour {
 		if (item != null) {
 			spriteRenderer.sprite = item.sprite;
 		}
+		else {
+			spriteRenderer.sprite = null;
+		}
 	}
 }

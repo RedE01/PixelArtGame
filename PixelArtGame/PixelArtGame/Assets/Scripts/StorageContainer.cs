@@ -22,7 +22,7 @@ public abstract class StorageContainer : MonoBehaviour {
 		Initialize();
 
 		CreateSlotGrid();
-		UpdateInventory();
+		UpdateSlots();
 	}
 
 	protected void Initialize() {
@@ -55,9 +55,10 @@ public abstract class StorageContainer : MonoBehaviour {
 		itemSlots[number].slotCounterText = itemSlots[number].slotItemImage.transform.Find("ItemCounter").GetComponent<Text>();
 		itemSlots[number].invItem = itemSlots[number].slotItemImage.GetComponent<InventoryItem>();
 		itemSlots[number].invItem.slotNumber = number;
+		itemSlots[number].invItem.containerScript = this;
 	}
 
-	public void UpdateInventory() {
+	public virtual void UpdateSlots() {
 		for (int i = 0; i < itemSlots.Length; i++) {
 			if (itemSlots[i].item != null) {
 				itemSlots[i].slotItemImage.gameObject.SetActive(true);

@@ -39,7 +39,7 @@ public class Pickup : MovableObject {
 				if(inventory.itemSlots[i].item == null || (inventory.itemSlots[i].item == item && inventory.itemSlots[i].itemCount < inventory.maxItems)) {
 					inventory.itemSlots[i].item = item;
 					inventory.itemSlots[i].itemCount++;
-					inventory.UpdateInventory();
+					inventory.UpdateSlots();
 
 					Destroy(gameObject);
 					break;

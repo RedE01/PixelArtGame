@@ -28,25 +28,25 @@ public class Inventory : StorageContainer {
 
 		CreateSlotGrid();
 
-		UpdateInventory(); 
+		UpdateSlots(); 
 	}
 
 	void Update() {
 		if(Input.GetButtonDown("Inventory")) {
 			parentObject.SetActive(!parentObject.activeSelf);
 			playerScript.playerState = parentObject.activeSelf ? Player.PlayerState.Menu : Player.PlayerState.Walking;
-			UpdateInventory();
+			UpdateSlots();
 		}
 		if (Input.GetButtonDown("Cancel")) {
 			parentObject.SetActive(false);
 			playerScript.playerState = Player.PlayerState.Walking;
-			UpdateInventory();
+			UpdateSlots();
 		}
 
 	}
 
-	public new void UpdateInventory() {
-		base.UpdateInventory();
+	public override void UpdateSlots() {
+		base.UpdateSlots();
 		for (int i = 0; i < itemSlots.Length; i++) {
 			if (i > slots - 1) {
 				ArmorItems(i);
