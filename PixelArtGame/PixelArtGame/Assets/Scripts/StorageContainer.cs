@@ -65,6 +65,13 @@ public abstract class StorageContainer : MonoBehaviour {
 
 				itemSlots[i].slotItemImage.sprite = itemSlots[i].item.sprite;
 				itemSlots[i].slotCounterText.text = itemSlots[i].itemCount.ToString();
+
+				if(itemSlots[i].itemCount < 2) {
+					itemSlots[i].slotCounterText.enabled = false;
+				}
+				else {
+					itemSlots[i].slotCounterText.enabled = true;
+				}
 			}
 			else {
 				itemSlots[i].slotItemImage.gameObject.SetActive(false);

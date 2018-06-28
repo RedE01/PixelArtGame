@@ -7,7 +7,8 @@ public abstract class Enemy : MovableObject {
 	public enum EnemyState {
 		Idle,
 		Chasing,
-		Attacking
+		Attacking,
+		Dead
 	}
 	public EnemyState enemyState = EnemyState.Idle;
 
@@ -30,12 +31,15 @@ public abstract class Enemy : MovableObject {
 		player = GameObject.FindGameObjectWithTag("Player");
 		playerScript = player.GetComponent<Player>();
 		rb = GetComponent<Rigidbody2D>();
+		target = transform.position;
 	}
 
 	void Update() {
 		switch (enemyState) {
 			case EnemyState.Idle:
-				SetRandomTarget(idleWalkDistance);
+				if (Vector2.Distance(transform.position, target) < 0.05f) {
+					SetRandomTarget(idleWalkDistance);
+				}
 				MoveToTarget();
 				speed = normalSpeed * 0.5f;
 
@@ -87,9 +91,12 @@ public abstract class Enemy : MovableObject {
 		rb.AddForce(dmgVector * damageKnockback, ForceMode2D.Impulse);
 
 		if(health <= 0) {
-			GameObject p = Instantiate(pickup, transform.position, Quaternion.identity);
-			p.GetComponent<Pickup>().item = drop;
-			Destroy(gameObject, .5f);
+			if (enemyState != EnemyState.Dead) {
+				GameObject p = Instantiate(pickup, transform.position, Quaternion.identity);
+				p.GetComponent<Pickup>().item = drop;
+				Destroy(gameObject, .5f);
+			}
+			enemyState = EnemyState.Dead;
 			return true;
 		}
 		return false;

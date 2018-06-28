@@ -17,10 +17,12 @@ public class PlayerHand : MonoBehaviour {
 		UpdateHand();
 	}
 
-	void LateUpdate() {
+	void Update() {
 		UpdateHand();
+	}
 
-		spriteRenderer.sortingOrder = playerSpriteRenderer.sortingOrder + 1;
+	void FixedUpdate() {
+		spriteRenderer.sortingOrder = playerSpriteRenderer.sortingOrder + 10;
 	}
 
 	void UpdateHand() {

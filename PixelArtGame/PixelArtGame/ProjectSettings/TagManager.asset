@@ -40,6 +40,9 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Dirt
+    uniqueID: 1672881445
+    locked: 0
   - name: Ground
     uniqueID: 1160951411
     locked: 0
@@ -48,4 +51,7 @@ TagManager:
     locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Top
+    uniqueID: 1619629775
     locked: 0

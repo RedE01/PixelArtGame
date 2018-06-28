@@ -9,6 +9,7 @@ public class InventoryItem : MonoBehaviour {
 
 	[HideInInspector]
 	public int slotNumber;
+	[HideInInspector]
 	public StorageContainer containerScript;
 
 	Inventory inventoryScript;
@@ -55,6 +56,7 @@ public class InventoryItem : MonoBehaviour {
 			}
 		}
 		
+		//Placing items on empty or same item
 		if (contScript.itemSlots[nearestSlotNumb].item == null || (contScript.itemSlots[nearestSlotNumb].item == containerScript.itemSlots[slotNumber].item && contScript.itemSlots[nearestSlotNumb].itemCount < contScript.maxItems)) {
 			if (nearestSlotNumb != slotNumber || contScript != containerScript) {
 				contScript.itemSlots[nearestSlotNumb].item = containerScript.itemSlots[slotNumber].item;
@@ -67,6 +69,19 @@ public class InventoryItem : MonoBehaviour {
 
 				contScript.UpdateSlots();
 			}
+		}
+		//Switching items with different item
+		else if(contScript.itemSlots[nearestSlotNumb].item != containerScript.itemSlots[slotNumber].item && contScript.itemSlots[nearestSlotNumb].item != null) {
+			Item tempItem = contScript.itemSlots[nearestSlotNumb].item;
+			int tempItemCount = contScript.itemSlots[nearestSlotNumb].itemCount;
+
+			contScript.itemSlots[nearestSlotNumb].item = containerScript.itemSlots[slotNumber].item;
+			containerScript.itemSlots[slotNumber].item = tempItem;
+
+			contScript.itemSlots[nearestSlotNumb].itemCount = containerScript.itemSlots[slotNumber].itemCount;
+			containerScript.itemSlots[slotNumber].itemCount = tempItemCount;
+
+			contScript.UpdateSlots();
 		}
 	}
 

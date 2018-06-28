@@ -88,6 +88,7 @@ public class Player : MovableObject {
 				if (Input.GetKeyDown(KeyCode.Mouse0)) {
 					if (!CheckUIClick()) {
 						attackScript.DashAttack();
+						dashChargeup = 0;
 					}
 				}
 			}
