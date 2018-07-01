@@ -27,7 +27,22 @@ public class PlayerHand : MonoBehaviour {
 
 	void UpdateHand() {
 		if (item != null) {
-			spriteRenderer.sprite = item.sprite;
+			spriteRenderer.sprite = item.equippedSprite;
+
+			switch(item.itemType) {
+				case Item.ItemType.Item:
+					playerScript.playerState = Player.PlayerState.Walking;
+					break;
+				case Item.ItemType.Axe:
+					playerScript.playerState = Player.PlayerState.Destroying;
+					break;
+				case Item.ItemType.BuildingMaterial:
+					playerScript.playerState = Player.PlayerState.Building;
+					break;
+				default:
+					playerScript.playerState = Player.PlayerState.Walking;
+					break;
+			}
 		}
 		else {
 			spriteRenderer.sprite = null;

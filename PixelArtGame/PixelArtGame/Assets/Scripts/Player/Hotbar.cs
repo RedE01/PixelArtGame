@@ -5,13 +5,14 @@ using UnityEngine;
 public class Hotbar : StorageContainer {
 
 	public GameObject playerHand;
+	public int hotbarKeyPressed;
 
 	int selected = 0;
 	PlayerHand playerHandScript;
 	KeyCode[] keycodes;
 
 	protected override void Start() {
-		keycodes = new KeyCode[] { KeyCode.Alpha1, KeyCode.Alpha2, KeyCode.Alpha3, KeyCode.Alpha4, KeyCode.Alpha5, KeyCode.Alpha6, KeyCode.Alpha7, KeyCode.Alpha8, KeyCode.Alpha9, KeyCode.Alpha0 };
+		keycodes = new KeyCode[] { KeyCode.Alpha1, KeyCode.Alpha2, KeyCode.Alpha3, KeyCode.Alpha4, KeyCode.Alpha5, KeyCode.Alpha6, KeyCode.Alpha7, KeyCode.Alpha8, KeyCode.Alpha9 };
 		playerHandScript = playerHand.GetComponent<PlayerHand>();
 
 		base.Start();
@@ -24,8 +25,10 @@ public class Hotbar : StorageContainer {
 		}
 
 		if (Input.anyKey) {
+			hotbarKeyPressed = -1;
 			for (int i = 0; i < keycodes.Length; i++) {
 				if (Input.GetKeyDown(keycodes[i])) {
+					hotbarKeyPressed = i;
 					selected = i;
 					UpdateHotbar();
 				}

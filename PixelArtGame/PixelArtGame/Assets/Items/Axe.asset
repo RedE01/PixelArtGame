@@ -9,9 +9,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5ae00a54a0aa5c14198b77b908a0865c, type: 3}
-  m_Name: TempWeapon
+  m_Name: Axe
   m_EditorClassIdentifier: 
-  name: TempSword
-  sprite: {fileID: 21300000, guid: 55d0d617f6a87a740b8089d61d175cec, type: 3}
-  fullSize: 1
+  itemType: 1
+  name: Axe
+  inventorySprite: {fileID: 21300000, guid: 3b2eaafdcb8ec89478cb86fe92c640d7, type: 3}
+  equippedSprite: {fileID: 21300000, guid: 694b102eb72b98f438cacb788ca15a2a, type: 3}
   pickupRadius: 0.4

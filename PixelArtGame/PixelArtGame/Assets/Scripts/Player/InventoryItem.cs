@@ -15,6 +15,7 @@ public class InventoryItem : MonoBehaviour {
 	Inventory inventoryScript;
 	Hotbar hotbarScript;
 	RectTransform rTransform;
+	bool mouseOver;
 
 	void Start() {
 		inventoryScript = GameObject.FindGameObjectWithTag("Player").GetComponent<Inventory>();
@@ -22,10 +23,24 @@ public class InventoryItem : MonoBehaviour {
 		rTransform = GetComponent<RectTransform>();
 	}
 
+	void Update() {
+		if(mouseOver) {
+			MoveToHotbar();
+		}
+	}
+
 	public void FollowCursor() {
 		transform.position = Input.mousePosition;
 		transform.parent.SetAsLastSibling();
 		transform.parent.parent.SetAsLastSibling();
+	}
+
+	public void MouseEnter() {
+		mouseOver = true;
+	}
+
+	public void MouseLeave() {
+		mouseOver = false;
 	}
 
 	public void ItemRelease() {
@@ -35,16 +50,24 @@ public class InventoryItem : MonoBehaviour {
 			DropItem();
 		}
 		else if (hit.collider.name == "InventoryBackground" || hit.collider.name == "CharacterSlotBackground") {
-			PlaceItemInSlot(inventoryScript);
+			PlaceItemInSlot(inventoryScript, GetNearestSlot(inventoryScript));
 		}
 		else if(hit.collider.name == "HotbarBackground") {
-			PlaceItemInSlot(hotbarScript);
+			PlaceItemInSlot(hotbarScript, GetNearestSlot(hotbarScript));
 		}
 		containerScript.UpdateSlots();
 		rTransform.anchoredPosition = Vector2.zero;
 	}
 
-	void PlaceItemInSlot(StorageContainer contScript) {
+	void MoveToHotbar() {
+		if (hotbarScript.hotbarKeyPressed != -1) {
+			PlaceItemInSlot(hotbarScript, hotbarScript.hotbarKeyPressed);
+			containerScript.UpdateSlots();
+			rTransform.anchoredPosition = Vector2.zero;
+		}
+	}
+
+	int GetNearestSlot(StorageContainer contScript) {
 		Vector3 nearest = Vector2.zero;
 		int nearestSlotNumb = 0;
 		Vector3 offset = containerScript.itemSlots[slotNumber].slotRectTransform.sizeDelta * 0.5f;
@@ -55,7 +78,10 @@ public class InventoryItem : MonoBehaviour {
 				nearestSlotNumb = i;
 			}
 		}
-		
+		return nearestSlotNumb;
+	}
+
+	void PlaceItemInSlot(StorageContainer contScript, int nearestSlotNumb) {
 		//Placing items on empty or same item
 		if (contScript.itemSlots[nearestSlotNumb].item == null || (contScript.itemSlots[nearestSlotNumb].item == containerScript.itemSlots[slotNumber].item && contScript.itemSlots[nearestSlotNumb].itemCount < contScript.maxItems)) {
 			if (nearestSlotNumb != slotNumber || contScript != containerScript) {

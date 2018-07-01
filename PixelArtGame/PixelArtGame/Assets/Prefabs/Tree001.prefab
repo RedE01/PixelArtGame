@@ -55,9 +55,10 @@ GameObject:
   - component: {fileID: 212409368028514526}
   - component: {fileID: 70567033765917272}
   - component: {fileID: 114350783670884912}
+  - component: {fileID: 114075307235384296}
   m_Layer: 0
   m_Name: Tree001
-  m_TagString: Untagged
+  m_TagString: Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -118,6 +119,20 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0.35}
   m_Size: {x: 1.7, y: 1.2}
   m_Direction: 1
+--- !u!114 &114075307235384296
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1671839106242364}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0300f674d9ec6d6499e057e6ba3fc938, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  drop: {fileID: 11400000, guid: eeffe6d8ee8f7024bbe41bcfe9501ed0, type: 2}
+  PickupPrefab: {fileID: 1494308221705008, guid: c92662b48a1739f4287f1f3581a8c112,
+    type: 2}
 --- !u!114 &114227712309138092
 MonoBehaviour:
   m_ObjectHideFlags: 1

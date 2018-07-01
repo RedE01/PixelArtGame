@@ -39,8 +39,6 @@ public class Attack : MonoBehaviour {
 		var partMain = attackParticleSystem.main;
 		partMain.startRotation = facingRad - 2.25f; //-2.25 rad ~ -130 deg, to to fix rotation
 
-		transform.rotation = Quaternion.AngleAxis(-facingRad * Mathf.Rad2Deg, new Vector3(0, 0, 1));
-
 		attackParticleSystem.Play();
 	}
 

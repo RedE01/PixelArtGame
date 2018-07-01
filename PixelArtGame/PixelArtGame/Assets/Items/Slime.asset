@@ -11,7 +11,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65651af5f72f3bb44ac7b9ce9b078460, type: 3}
   m_Name: Slime
   m_EditorClassIdentifier: 
-  name: 
-  sprite: {fileID: 21300000, guid: b51d513cde3324f4b80cfa421863e470, type: 3}
+  itemType: 0
+  name: Slime
+  inventorySprite: {fileID: 21300000, guid: b51d513cde3324f4b80cfa421863e470, type: 3}
+  equippedSprite: {fileID: 21300000, guid: b51d513cde3324f4b80cfa421863e470, type: 3}
   pickupRadius: 0.4
-  itemCount: 1

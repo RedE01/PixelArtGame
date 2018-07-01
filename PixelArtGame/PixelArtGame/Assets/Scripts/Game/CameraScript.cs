@@ -23,8 +23,8 @@ public class CameraScript : MonoBehaviour {
 	void LateUpdate() {
 		transform.position = new Vector3(pos.x, pos.y, transform.position.z);
 
-		pos.x = Mathf.Lerp(transform.position.x, target.position.x, 0.015f);
-		pos.y = Mathf.Lerp(transform.position.y, target.position.y, 0.015f);
+		pos.x = Mathf.Lerp(transform.position.x, target.position.x, 0.02f);
+		pos.y = Mathf.Lerp(transform.position.y, target.position.y, 0.02f);
 	}
 
 	public void StartShake(float shakeMagnitude, float shakeStrength, float shakeTime) {

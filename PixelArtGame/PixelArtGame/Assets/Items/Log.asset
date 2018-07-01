@@ -9,8 +9,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 65651af5f72f3bb44ac7b9ce9b078460, type: 3}
-  m_Name: Coin
+  m_Name: Log
   m_EditorClassIdentifier: 
-  name: Coin
-  sprite: {fileID: 21300000, guid: b3e462f193a7efa4f83edca565585741, type: 3}
+  itemType: 2
+  name: Log
+  inventorySprite: {fileID: 21300000, guid: 0277ce42b829fc1468cd57190d58554f, type: 3}
+  equippedSprite: {fileID: 21300000, guid: 0277ce42b829fc1468cd57190d58554f, type: 3}
   pickupRadius: 0.4

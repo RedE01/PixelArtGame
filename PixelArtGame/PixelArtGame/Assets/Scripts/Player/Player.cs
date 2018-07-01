@@ -7,6 +7,7 @@ public class Player : MovableObject {
 	public enum PlayerState : short {
 		Walking,
 		Building,
+		Destroying,
 		Dashing,
 		Attacking,
 		Menu
@@ -22,7 +23,7 @@ public class Player : MovableObject {
 	Vector2 movement;
 	Rigidbody2D rb;
 	Attack attackScript;
-	Build buildScript;
+	EditWorld buildScript;
 	CameraScript cameraScript;
 	float dashChargeup;
 
@@ -30,12 +31,16 @@ public class Player : MovableObject {
 		rb = GetComponent<Rigidbody2D>();
 		attackScript = GetComponentInChildren<Attack>();
 		cameraScript = Camera.main.GetComponent<CameraScript>();
+		buildScript = GetComponentInChildren<EditWorld>();
 		healthbar = GameObject.FindGameObjectWithTag("Healthbar").GetComponent<HealthUI>();
 	}
 
 	void Update() {
 		facing = new Vector2(GameManager.instance.mousePos.x - transform.position.x, GameManager.instance.mousePos.y - transform.position.y).normalized;
 		movement = Vector2.zero;
+
+		float facingRad = Mathf.Atan2(facing.x, facing.y);
+		attackScript.transform.rotation = Quaternion.AngleAxis(-facingRad * Mathf.Rad2Deg, new Vector3(0, 0, 1));
 
 		switch (playerState) {
 			case PlayerState.Walking:
@@ -45,6 +50,10 @@ public class Player : MovableObject {
 			case PlayerState.Building:
 				Movement();
 				Build();
+				break;
+			case PlayerState.Destroying:
+				Movement();
+				DestroyObject();
 				break;
 			case PlayerState.Menu:
 				Movement();
@@ -122,5 +131,9 @@ public class Player : MovableObject {
 		if(Input.GetKeyDown(KeyCode.Mouse0)) {
 			buildScript.PlaceObject();
 		}
+	}
+
+	private void DestroyObject() {
+		buildScript.DestroyObject();
 	}
 }

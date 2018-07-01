@@ -15,7 +15,7 @@ public class Pickup : MovableObject {
 	void Start() {
 		pickupObj = transform.Find("PickupSprite").gameObject;
 		pickupRenderer = pickupObj.GetComponent<SpriteRenderer>();
-		pickupRenderer.sprite = item.sprite;
+		pickupRenderer.sprite = item.inventorySprite;
 
 		shadowObj = transform.Find("ShadowSprite").gameObject;
 		shadowRenderer = shadowObj.GetComponent<SpriteRenderer>();
