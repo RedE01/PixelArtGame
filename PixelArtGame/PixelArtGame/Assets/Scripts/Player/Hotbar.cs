@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Hotbar : StorageContainer {
 
@@ -18,7 +19,24 @@ public class Hotbar : StorageContainer {
 		base.Start();
 	}
 
+	public override void SetupSlot(int number) {
+		base.SetupSlot(number);
+
+		itemSlots[number].slot.GetComponent<Button>().interactable = false;
+	}
+
 	void Update() {
+		if (playerScript.playerState == Player.PlayerState.Inventory && itemSlots[0].slotItemImage.raycastTarget == false) {
+			for (int i = 0; i < itemSlots.Length; i++) {
+				itemSlots[i].slotItemImage.raycastTarget = true;
+			}
+		}
+		else if(playerScript.playerState != Player.PlayerState.Inventory && itemSlots[0].slotItemImage.raycastTarget == true) {
+			for (int i = 0; i < itemSlots.Length; i++) {
+				itemSlots[i].slotItemImage.raycastTarget = false;
+			}
+		}
+
 		if ((int)Input.GetAxis("Mouse ScrollWheel") != 0) {
 			selected += (int)Input.GetAxis("Mouse ScrollWheel");
 			UpdateHotbar();

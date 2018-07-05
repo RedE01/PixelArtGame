@@ -34,12 +34,12 @@ public class Inventory : StorageContainer {
 	void Update() {
 		if(Input.GetButtonDown("Inventory")) {
 			parentObject.SetActive(!parentObject.activeSelf);
-			playerScript.playerState = parentObject.activeSelf ? Player.PlayerState.Menu : Player.PlayerState.Walking;
+			playerScript.playerState = parentObject.activeSelf ? Player.PlayerState.Inventory : Player.PlayerState.Default;
 			UpdateSlots();
 		}
 		if (Input.GetButtonDown("Cancel")) {
 			parentObject.SetActive(false);
-			playerScript.playerState = Player.PlayerState.Walking;
+			playerScript.playerState = Player.PlayerState.Default;
 			UpdateSlots();
 		}
 

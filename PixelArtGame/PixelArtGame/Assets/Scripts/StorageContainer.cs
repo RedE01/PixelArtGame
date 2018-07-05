@@ -49,7 +49,7 @@ public abstract class StorageContainer : MonoBehaviour {
 		}
 	}
 
-	protected void SetupSlot(int number) {
+	public virtual void SetupSlot(int number) {
 		itemSlots[number].slotRectTransform = itemSlots[number].slot.GetComponent<RectTransform>();
 		itemSlots[number].slotItemImage = itemSlots[number].slot.transform.Find("Item").GetComponent<Image>();
 		itemSlots[number].slotCounterText = itemSlots[number].slotItemImage.transform.Find("ItemCounter").GetComponent<Text>();

@@ -12,11 +12,16 @@ public class Attack : MonoBehaviour {
 	Rigidbody2D rb;
 	CameraScript cameraScript;
 
+	ParticleSystem.MainModule partMain;
+
 	void Start() {
 		attackParticleSystem = GetComponentInChildren<ParticleSystem>();
 		playerScript = transform.parent.gameObject.GetComponent<Player>();
 		rb = playerScript.GetComponent<Rigidbody2D>();
 		cameraScript = Camera.main.GetComponent<CameraScript>();
+
+		partMain = attackParticleSystem.main;
+		partMain.startLifetime = attackTime;
 	}
 
 	public void SimpleAttack() {
@@ -36,7 +41,6 @@ public class Attack : MonoBehaviour {
 	private void SwordParticles() {
 		float facingRad = Mathf.Atan2(playerScript.facing.x, playerScript.facing.y);
 
-		var partMain = attackParticleSystem.main;
 		partMain.startRotation = facingRad - 2.25f; //-2.25 rad ~ -130 deg, to to fix rotation
 
 		attackParticleSystem.Play();
@@ -56,7 +60,7 @@ public class Attack : MonoBehaviour {
 	}
 
 	void EndAttack() {
-		playerScript.playerState = Player.PlayerState.Walking;
+		playerScript.playerState = Player.PlayerState.Default;
 	}
 
 	void OnTriggerEnter2D(Collider2D collision) {

@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65651af5f72f3bb44ac7b9ce9b078460, type: 3}
   m_Name: Log
   m_EditorClassIdentifier: 
-  itemType: 2
+  itemType: 0
   name: Log
   inventorySprite: {fileID: 21300000, guid: 0277ce42b829fc1468cd57190d58554f, type: 3}
   equippedSprite: {fileID: 21300000, guid: 0277ce42b829fc1468cd57190d58554f, type: 3}

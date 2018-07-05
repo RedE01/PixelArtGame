@@ -8,7 +8,6 @@ public class Item : ScriptableObject {
 	public enum ItemType {
 		Item,
 		Axe,
-		BuildingMaterial
 	}
 	public ItemType itemType;
 

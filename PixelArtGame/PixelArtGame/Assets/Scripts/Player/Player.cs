@@ -5,14 +5,14 @@ using UnityEngine;
 public class Player : MovableObject {
 
 	public enum PlayerState : short {
-		Walking,
-		Building,
+		Default,
+		Menu,
+		Inventory,
 		Destroying,
 		Dashing,
 		Attacking,
-		Menu
 	}
-	public PlayerState playerState = PlayerState.Walking;
+	public PlayerState playerState = PlayerState.Default;
 
 	public float speed, dashChargeupTime;
 
@@ -23,7 +23,8 @@ public class Player : MovableObject {
 	Vector2 movement;
 	Rigidbody2D rb;
 	Attack attackScript;
-	EditWorld buildScript;
+	DestroyObject destroyObjectScript;
+	PlayerHand playerHandScript;
 	CameraScript cameraScript;
 	float dashChargeup;
 
@@ -31,31 +32,37 @@ public class Player : MovableObject {
 		rb = GetComponent<Rigidbody2D>();
 		attackScript = GetComponentInChildren<Attack>();
 		cameraScript = Camera.main.GetComponent<CameraScript>();
-		buildScript = GetComponentInChildren<EditWorld>();
+		destroyObjectScript = GetComponentInChildren<DestroyObject>();
 		healthbar = GameObject.FindGameObjectWithTag("Healthbar").GetComponent<HealthUI>();
+		playerHandScript = GetComponentInChildren<PlayerHand>();
 	}
 
 	void Update() {
 		facing = new Vector2(GameManager.instance.mousePos.x - transform.position.x, GameManager.instance.mousePos.y - transform.position.y).normalized;
 		movement = Vector2.zero;
 
-		float facingRad = Mathf.Atan2(facing.x, facing.y);
-		attackScript.transform.rotation = Quaternion.AngleAxis(-facingRad * Mathf.Rad2Deg, new Vector3(0, 0, 1));
+		if (playerState == PlayerState.Default) {
+			float facingRad = Mathf.Atan2(facing.x, facing.y);
+			attackScript.transform.rotation = Quaternion.AngleAxis(-facingRad * Mathf.Rad2Deg, new Vector3(0, 0, 1));
+		}
 
 		switch (playerState) {
-			case PlayerState.Walking:
+			case PlayerState.Default:
 				Movement();
-				Attack();
-				break;
-			case PlayerState.Building:
-				Movement();
-				Build();
+
+				switch (playerHandScript.GetItemType(playerHandScript.item)) {
+					case Item.ItemType.Axe:
+						if(!destroyObjectScript.DestroyTarget()) {
+							Attack();
+						}
+						break;
+					case Item.ItemType.Item:
+						Attack();
+						break;
+				}
+
 				break;
 			case PlayerState.Destroying:
-				Movement();
-				DestroyObject();
-				break;
-			case PlayerState.Menu:
 				Movement();
 				break;
 		}
@@ -127,13 +134,9 @@ public class Player : MovableObject {
 		}
 	}
 
-	private void Build() {
-		if(Input.GetKeyDown(KeyCode.Mouse0)) {
-			buildScript.PlaceObject();
-		}
-	}
-
-	private void DestroyObject() {
-		buildScript.DestroyObject();
-	}
+	//private void Build() {
+	//	if(Input.GetKeyDown(KeyCode.Mouse0)) {
+	//		buildScript.PlaceObject();
+	//	}
+	//}
 }
