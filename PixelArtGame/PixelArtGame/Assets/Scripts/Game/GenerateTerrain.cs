@@ -5,7 +5,9 @@ public class GenerateTerrain : MonoBehaviour {
 
 	public Tilemap dirtTilemap;
 	public Tilemap groundTilemap;
-	public Tilemap hillsTilemap;
+	public Tilemap hillsTilemap1;
+	public Tilemap hillsTilemap2;
+	public Tilemap hillsTilemap3;
 	public GameObject tree;
 	public Transform treeParent;
 	public float treePercent;
@@ -15,8 +17,9 @@ public class GenerateTerrain : MonoBehaviour {
 	public Tile[] hillTiles;
 
 	readonly int chunkWidth = 10;
-	readonly int activeChunksRadius = 2;
+	readonly int activeChunksRadius = 4;
 	readonly int worldSize = 500;
+	readonly Vector2Int startArea = new Vector2Int(20, 10);
 	int seed = 0;
 	float scale = 0.75f;
 	Transform player;
@@ -29,9 +32,6 @@ public class GenerateTerrain : MonoBehaviour {
 
 	void Update() {
 		GenerateAroundPlayer();
-
-		//GenerateHills(new Vector3Int(6, -2, 0));
-
 	}
 
 	void GenerateAroundPlayer() {
@@ -42,9 +42,12 @@ public class GenerateTerrain : MonoBehaviour {
 					GenerateChunk(dirtTilemap, dirtTiles, chunk, 90);
 					GenerateChunk(groundTilemap, grassTiles, chunk, 75);
 
-					GenerateHills(chunk);
-					
+					GenerateHills(hillsTilemap1, chunk, 0.55f);
+					GenerateHills(hillsTilemap2, chunk, 0.7f);
+					GenerateHills(hillsTilemap3, chunk, 0.8f);
+
 					GenerateTrees(chunk);
+					return;
 				}
 			}
 		}
@@ -74,7 +77,7 @@ public class GenerateTerrain : MonoBehaviour {
 						//	wa.name = "RIP";
 						//}
 						//else {
-							
+
 						//}
 					}
 					treeNumber++;
@@ -103,127 +106,147 @@ public class GenerateTerrain : MonoBehaviour {
 		}
 	}
 
-	void GenerateHills(Vector3Int chunk) {
+	void GenerateHills(Tilemap tilemap, Vector3Int chunk, float checkOver) {
 		Vector3Int pos = new Vector3Int(chunk.x * chunkWidth, chunk.y * chunkWidth, 0);
+
 		for (int x = 0; x < chunkWidth; x++) {
 			for (int y = 0; y < chunkWidth; y++) {
 				float xCoord = (float)x / (float)chunkWidth * (float)scale + (float)chunk.x * scale + worldSize;
 				float yCoord = (float)y / (float)chunkWidth * (float)scale + (float)chunk.y * scale + worldSize;
 
-				float height = Mathf.PerlinNoise(xCoord, yCoord);
-
-				if(height > 0.6f) {
+				if (!CheckPerlinNoiseAtPos(xCoord, yCoord, 0, 0, checkOver, x, y, pos)) {
 					bool below = false;
 					bool right = false;
 					bool left = false;
 					bool above = false;
 
-					if (CheckPerlinNoiseAtPos(xCoord, yCoord, 0, -1, 0.6f)) {// checks below
+					if (CheckPerlinNoiseAtPos(xCoord, yCoord, 0, -1, checkOver, x, y, pos)) {// checks below
 						below = true;
 					}
-					if (CheckPerlinNoiseAtPos(xCoord, yCoord, 1, 0, 0.6f)) {// checks right
+					if (CheckPerlinNoiseAtPos(xCoord, yCoord, 1, 0, checkOver, x, y, pos)) {// checks right
 						right = true;
 					}
-					if (CheckPerlinNoiseAtPos(xCoord, yCoord, 0, 1, 0.6f)) {// checks above
+					if (CheckPerlinNoiseAtPos(xCoord, yCoord, 0, 1, checkOver, x, y, pos)) {// checks above
 						above = true;
 					}
-					if (CheckPerlinNoiseAtPos(xCoord, yCoord, -1, 0, 0.6f)) {// checks left
+					if (CheckPerlinNoiseAtPos(xCoord, yCoord, -1, 0, checkOver, x, y, pos)) {// checks left
 						left = true;
 					}
 
-					if (below && !right && !left && !above) { //below 
-						if (!CheckPerlinNoiseAtPos(xCoord, yCoord, 1, -1, 0.6f)) {
-							hillsTilemap.SetTile(new Vector3Int(x + pos.x, y + pos.y, 0), hillTiles[20]);
-							hillsTilemap.SetTile(new Vector3Int(x + pos.x, y + pos.y - 1, 0), hillTiles[18]);
-						}
-						else if (!CheckPerlinNoiseAtPos(xCoord, yCoord, -1, -1, 0.6f)) {
-							hillsTilemap.SetTile(new Vector3Int(x + pos.x, y + pos.y, 0), hillTiles[21]);
-							hillsTilemap.SetTile(new Vector3Int(x + pos.x, y + pos.y - 1, 0), hillTiles[19]);
-						}
-						else {
-							hillsTilemap.SetTile(new Vector3Int(x + pos.x, y + pos.y, 0), hillTiles[10]);
-						}
-					}
-
-					else if (!below && right && !left && !above) { //right
-						hillsTilemap.SetTile(new Vector3Int(x + pos.x, y + pos.y, 0), hillTiles[3]);
-					}
-
-					else if (!below && !right && left && !above) { //left
-						hillsTilemap.SetTile(new Vector3Int(x + pos.x, y + pos.y, 0), hillTiles[0]);
-					}
-
-					else if (!below && !right && !left && above) {//above
-						if (!CheckPerlinNoiseAtPos(xCoord, yCoord, 1, 1, 0.6f)) {
-							hillsTilemap.SetTile(new Vector3Int(x + pos.x, y + pos.y, 0), hillTiles[22]);
-						}
-						else if (!CheckPerlinNoiseAtPos(xCoord, yCoord, -1, 1, 0.6f)) {
-							hillsTilemap.SetTile(new Vector3Int(x + pos.x, y + pos.y, 0), hillTiles[23]);
-						}
-						else {
-							hillsTilemap.SetTile(new Vector3Int(x + pos.x, y + pos.y, 0), hillTiles[6]);
-						}
-					}
-
-					else if (!below && !right && left && above) {//left && above
-						if (!CheckPerlinNoiseAtPos(xCoord, yCoord, 1, 1, 0.6f)) {
-							hillsTilemap.SetTile(new Vector3Int(x + pos.x, y + pos.y, 0), hillTiles[12]);
-						}
-						else {
-							hillsTilemap.SetTile(new Vector3Int(x + pos.x, y + pos.y, 0), hillTiles[7]);
-						}
-					}
-
-					else if (!below && right && !left && above) {//right && above
-						if (!CheckPerlinNoiseAtPos(xCoord, yCoord, -1, 1, 0.6f)) {
-							hillsTilemap.SetTile(new Vector3Int(x + pos.x, y + pos.y, 0), hillTiles[13]);
-						}
-						else {
-							hillsTilemap.SetTile(new Vector3Int(x + pos.x, y + pos.y, 0), hillTiles[15]);
-						}
-					}
-
-					else if (below && !right && left && !above) {//left && below
-						if (!CheckPerlinNoiseAtPos(xCoord, yCoord, 1, -1, 0.6f)) {
-							hillsTilemap.SetTile(new Vector3Int(x + pos.x, y + pos.y, 0), hillTiles[16]);
-							hillsTilemap.SetTile(new Vector3Int(x + pos.x, y + pos.y -1, 0), hillTiles[18]);
-						}
-						else {
-							hillsTilemap.SetTile(new Vector3Int(x + pos.x, y + pos.y, 0), hillTiles[8]);
-						}
-					}
-
-					else if (below && right && !left && !above) {//right && below
-						if (!CheckPerlinNoiseAtPos(xCoord, yCoord, -1, -1, 0.6f)) {
-							hillsTilemap.SetTile(new Vector3Int(x + pos.x, y + pos.y, 0), hillTiles[17]);
-							hillsTilemap.SetTile(new Vector3Int(x + pos.x, y + pos.y - 1, 0), hillTiles[19]);
-						}
-						else {
-							hillsTilemap.SetTile(new Vector3Int(x + pos.x, y + pos.y, 0), hillTiles[11]);
-						}
-					}
-					else if(below && above) {
-						if (!CheckPerlinNoiseAtPos(xCoord, yCoord, -1, 0, 0.6f)) {
-							hillsTilemap.SetTile(new Vector3Int(x + pos.x -1, y + pos.y, 0), hillTiles[3]);
-						}
-						else if (!CheckPerlinNoiseAtPos(xCoord, yCoord, 1, 0, 0.6f)) {
-							hillsTilemap.SetTile(new Vector3Int(x + pos.x + 1, y + pos.y, 0), hillTiles[0]);
-						}
-					}
-					else if(right && left) {
-						if (!CheckPerlinNoiseAtPos(xCoord, yCoord, -1, -1, 0.6f)) {
-						}
-					}
-					else {
-						groundTilemap.SetTile(new Vector3Int(x + pos.x, y + pos.y, 0), grassTiles[0]);
-					}
+					SetHillTile(tilemap, pos, x, y, xCoord, yCoord, below, right, left, above, checkOver);
 				}
 			}
+
 		}
 	}
 
-	bool CheckPerlinNoiseAtPos(float xCoord, float yCoord, int xOffset, int yOffset, float percentage) {
-		return Mathf.PerlinNoise(xCoord + (scale / (float)chunkWidth) * (float)xOffset, yCoord + (scale / (float)chunkWidth) * (float)yOffset) <= percentage;
-	} 
+	bool CheckPerlinNoiseAtPos(float xCoord, float yCoord, int xOffset, int yOffset, float checkOver, int x, int y, Vector3Int pos) {
+		int xAbs = Mathf.Abs(x + xOffset + pos.x);
+		int yAbs = Mathf.Abs(y + yOffset + pos.y);
 
+		float limiter = 1;
+		if (xAbs < startArea.x + chunkWidth && yAbs < startArea.y + chunkWidth) {
+			limiter = (xAbs + startArea.x > yAbs + startArea.y) ? (float)(xAbs - startArea.x) : (float)(yAbs - startArea.y);
+			limiter = (limiter) / (chunkWidth);
+			limiter = Mathf.Clamp(limiter + 0.2f, 0, 1);
+		}
+
+		return (Mathf.PerlinNoise(xCoord + (scale / (float)chunkWidth) * (float)xOffset, yCoord + (scale / (float)chunkWidth) * (float)yOffset)) * limiter <= checkOver;
+	}
+
+	void SetHillTile(Tilemap tilemap, Vector3Int pos, int x, int y, float xCoord, float yCoord, bool below, bool right, bool left, bool above, float checkOver) {
+		if (below && !right && !left && !above) { //below 
+			if (!CheckPerlinNoiseAtPos(xCoord, yCoord, 1, -1, checkOver, x, y, pos)) {
+				tilemap.SetTile(new Vector3Int(x + pos.x, y + pos.y, 0), hillTiles[20]);
+				tilemap.SetTile(new Vector3Int(x + pos.x, y + pos.y - 1, 0), hillTiles[18]);
+			}
+			else if (!CheckPerlinNoiseAtPos(xCoord, yCoord, -1, -1, checkOver, x, y, pos)) {
+				tilemap.SetTile(new Vector3Int(x + pos.x, y + pos.y, 0), hillTiles[21]);
+				tilemap.SetTile(new Vector3Int(x + pos.x, y + pos.y - 1, 0), hillTiles[19]);
+			}
+			else {
+				tilemap.SetTile(new Vector3Int(x + pos.x, y + pos.y, 0), hillTiles[10]);
+			}
+		}
+
+		else if (!below && right && !left && !above) { //right
+			tilemap.SetTile(new Vector3Int(x + pos.x, y + pos.y, 0), hillTiles[3]);
+		}
+
+		else if (!below && !right && left && !above) { //left
+			tilemap.SetTile(new Vector3Int(x + pos.x, y + pos.y, 0), hillTiles[0]);
+		}
+
+		else if (!below && !right && !left && above) {//above
+			if (!CheckPerlinNoiseAtPos(xCoord, yCoord, 1, 1, checkOver, x, y, pos)) {
+				tilemap.SetTile(new Vector3Int(x + pos.x, y + pos.y, 0), hillTiles[22]);
+			}
+			else if (!CheckPerlinNoiseAtPos(xCoord, yCoord, -1, 1, checkOver, x, y, pos)) {
+				tilemap.SetTile(new Vector3Int(x + pos.x, y + pos.y, 0), hillTiles[23]);
+			}
+			else {
+				tilemap.SetTile(new Vector3Int(x + pos.x, y + pos.y, 0), hillTiles[6]);
+			}
+		}
+
+		else if (!below && !right && left && above) {//left && above
+			if (!CheckPerlinNoiseAtPos(xCoord, yCoord, 1, 1, checkOver, x, y, pos)) {
+				tilemap.SetTile(new Vector3Int(x + pos.x, y + pos.y, 0), hillTiles[12]);
+			}
+			else {
+				tilemap.SetTile(new Vector3Int(x + pos.x, y + pos.y, 0), hillTiles[7]);
+			}
+		}
+
+		else if (!below && right && !left && above) {//right && above
+			if (!CheckPerlinNoiseAtPos(xCoord, yCoord, -1, 1, checkOver, x, y, pos)) {
+				tilemap.SetTile(new Vector3Int(x + pos.x, y + pos.y, 0), hillTiles[13]);
+			}
+			else {
+				tilemap.SetTile(new Vector3Int(x + pos.x, y + pos.y, 0), hillTiles[15]);
+			}
+		}
+
+		else if (below && !right && left && !above) {//left && below
+			if (!CheckPerlinNoiseAtPos(xCoord, yCoord, 1, -1, checkOver, x, y, pos)) {
+				tilemap.SetTile(new Vector3Int(x + pos.x, y + pos.y, 0), hillTiles[16]);
+				tilemap.SetTile(new Vector3Int(x + pos.x, y + pos.y - 1, 0), hillTiles[18]);
+			}
+			else {
+				tilemap.SetTile(new Vector3Int(x + pos.x, y + pos.y, 0), hillTiles[8]);
+			}
+		}
+
+		else if (below && right && !left && !above) {//right && below
+			if (!CheckPerlinNoiseAtPos(xCoord, yCoord, -1, -1, checkOver, x, y, pos)) { //top left diagonal
+				tilemap.SetTile(new Vector3Int(x + pos.x, y + pos.y, 0), hillTiles[17]);
+				tilemap.SetTile(new Vector3Int(x + pos.x, y + pos.y - 1, 0), hillTiles[19]);
+			}
+			else {
+				tilemap.SetTile(new Vector3Int(x + pos.x, y + pos.y, 0), hillTiles[11]);
+			}
+		}
+
+		else if (below && above) { //below and above
+			if (!CheckPerlinNoiseAtPos(xCoord, yCoord, -1, 0, checkOver, x, y, pos)) {
+				tilemap.SetTile(new Vector3Int(x + pos.x - 1, y + pos.y, 0), hillTiles[3]);
+			}
+			else /*if (!CheckPerlinNoiseAtPos(xCoord, yCoord, 1, 0, checkOver))*/ {
+				tilemap.SetTile(new Vector3Int(x + pos.x + 1, y + pos.y, 0), hillTiles[0]);
+			}
+		}
+
+		else if (right && left) { //right and left
+			tilemap.SetTile(new Vector3Int(x + pos.x, y + pos.y, 0), dirtTiles[1]);
+			if (!CheckPerlinNoiseAtPos(xCoord, yCoord, 0, 1, checkOver, x, y, pos)) {
+				tilemap.SetTile(new Vector3Int(x + pos.x, y + pos.y, 0), hillTiles[1]);
+			}
+			else if (!CheckPerlinNoiseAtPos(xCoord, yCoord, 0, -1, checkOver, x, y, pos)) {
+				tilemap.SetTile(new Vector3Int(x + pos.x, y + pos.y, 0), hillTiles[2]);
+			}
+		}
+
+		//if (x + pos.x < -43 && x + pos.x > -47 && y + pos.y > -13 && y + pos.y < -9)
+		//	Debug.Log(new Vector3Int(x + pos.x, y + pos.y, 0) + " : " + Mathf.PerlinNoise(xCoord + (scale / (float)chunkWidth) * 0, yCoord + (scale / (float)chunkWidth) * 0));
+	}
 }

@@ -4,15 +4,14 @@ using UnityEngine;
 
 public class PlayerHand : MonoBehaviour {
 
+	[HideInInspector]
 	public Item item;
 
-	Player playerScript;
-	SpriteRenderer playerSpriteRenderer;
+	public SpriteRenderer playerSpriteRenderer;
+
 	SpriteRenderer spriteRenderer;
 
 	void Start() {
-		playerScript = transform.parent.GetComponent<Player>();
-		playerSpriteRenderer = playerScript.GetComponent<SpriteRenderer>();
 		spriteRenderer = GetComponent<SpriteRenderer>();
 		UpdateHand();
 	}

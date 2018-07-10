@@ -14,8 +14,11 @@ public class Player : MovableObject {
 	}
 	public PlayerState playerState = PlayerState.Default;
 
+	public Animator animator;
 	public float speed, dashChargeupTime;
 
+	[HideInInspector]
+	public bool disableHillsCollision, enableHillsCollision;
 	[HideInInspector]
 	public Vector2 facing;
 
@@ -66,6 +69,15 @@ public class Player : MovableObject {
 				Movement();
 				break;
 		}
+
+		if (enableHillsCollision) {
+			Physics2D.IgnoreLayerCollision(0, 8, true);
+			enableHillsCollision = false;
+		}
+		if (disableHillsCollision) {
+			Physics2D.IgnoreLayerCollision(0, 8, false);
+			disableHillsCollision = false;
+		}
 	}
 
 	void FixedUpdate() {
@@ -89,6 +101,13 @@ public class Player : MovableObject {
 			movement = movement.normalized;
 		}
 		movement *= speed;
+
+		if(Input.GetButtonDown("Jump")) {
+			animator.SetBool("Jump", true);
+		}
+		else {
+			animator.SetBool("Jump", false);
+		}
 	}
 
 	private void Attack() {

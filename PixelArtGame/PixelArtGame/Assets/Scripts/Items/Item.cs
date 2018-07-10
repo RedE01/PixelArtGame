@@ -8,7 +8,9 @@ public class Item : ScriptableObject {
 	public enum ItemType {
 		Item,
 		Axe,
+		Weapon
 	}
+	[HideInInspector]
 	public ItemType itemType;
 
 	public new string name;
@@ -17,4 +19,8 @@ public class Item : ScriptableObject {
 
 	[Range(0.4f, 2)]
 	public float pickupRadius = 0.4f;
+
+	void Awake() {
+		itemType = ItemType.Item;
+	}
 }
