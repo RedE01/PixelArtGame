@@ -33,7 +33,7 @@ public class TimeManager : MonoBehaviour {
 	}
 
 	void Update() {
-		float time = (GameManager.instance.day - Mathf.Floor(GameManager.instance.day)) * 24f + 12f;
+		float time = (GameManager.instance.day - Mathf.Floor(GameManager.instance.day)) * 24f;
 		timeText.text = ((int)time).ToString();
 
 		if (time >= sunsetEndUnclamped && time < sunrise) partOfDay = PartOfDay.Night;

@@ -20,7 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4496221504000366}
   - component: {fileID: 108941304012037190}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: SpotLight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -36,7 +36,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4242519017736424}
   - component: {fileID: 61415174607405460}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Collider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -55,9 +55,9 @@ GameObject:
   - component: {fileID: 95448864762658468}
   - component: {fileID: 114662389763022542}
   - component: {fileID: 61016027657925712}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Portal
-  m_TagString: Untagged
+  m_TagString: Portal
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

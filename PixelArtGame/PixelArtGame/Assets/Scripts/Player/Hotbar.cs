@@ -5,15 +5,16 @@ using UnityEngine.UI;
 
 public class Hotbar : StorageContainer {
 
-	public GameObject playerHand;
 	public int hotbarKeyPressed;
 
+	GameObject playerHand;
 	int selected = 0;
 	PlayerHand playerHandScript;
 	KeyCode[] keycodes;
 
 	protected override void Start() {
 		keycodes = new KeyCode[] { KeyCode.Alpha1, KeyCode.Alpha2, KeyCode.Alpha3, KeyCode.Alpha4, KeyCode.Alpha5, KeyCode.Alpha6, KeyCode.Alpha7, KeyCode.Alpha8, KeyCode.Alpha9 };
+		playerHand = GameObject.FindGameObjectWithTag("PlayerHand");
 		playerHandScript = playerHand.GetComponent<PlayerHand>();
 
 		base.Start();

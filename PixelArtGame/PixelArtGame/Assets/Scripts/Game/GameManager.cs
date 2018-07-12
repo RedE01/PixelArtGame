@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour {
 	public float health = 100;
 	public float coins = 0;
 
-	private float daySpeed = 1f / (60f * 10);
+	private float dayTime = 1f / (60f * 10f);
 
 	void Awake() {
 		if(instance == null) {
@@ -27,12 +27,12 @@ public class GameManager : MonoBehaviour {
 		sortingOrderPrecision = -100;
 		health = 100;
 		coins = 0;
-		day = 0f;
+		day = 0.5f;
 }
 
 	void Update () {
 		mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
-		day += Time.deltaTime * daySpeed;
+		day += Time.deltaTime * dayTime;
 	}
 }

@@ -7,6 +7,8 @@ TagManager:
   - Enemy
   - Healthbar
   - Object
+  - Portal
+  - PlayerHand
   layers:
   - Default
   - TransparentFX
@@ -18,8 +20,8 @@ TagManager:
   - 
   - Hills
   - Static
-  - 
-  - 
+  - FacingCollider
+  - Portal
   - 
   - 
   - 

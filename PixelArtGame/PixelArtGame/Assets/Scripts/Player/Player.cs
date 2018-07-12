@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Player : MovableObject {
 
@@ -10,15 +11,13 @@ public class Player : MovableObject {
 		Inventory,
 		Destroying,
 		Dashing,
-		Attacking,
+		Attacking
 	}
 	public PlayerState playerState = PlayerState.Default;
 
 	public Animator animator;
 	public float speed, dashChargeupTime;
 
-	[HideInInspector]
-	public bool disableHillsCollision, enableHillsCollision;
 	[HideInInspector]
 	public Vector2 facing;
 
@@ -30,6 +29,7 @@ public class Player : MovableObject {
 	PlayerHand playerHandScript;
 	CameraScript cameraScript;
 	float dashChargeup;
+	int jumpHash = Animator.StringToHash("Jump");
 
 	void Start() {
 		rb = GetComponent<Rigidbody2D>();
@@ -41,6 +41,8 @@ public class Player : MovableObject {
 	}
 
 	void Update() {
+		if (Input.GetKeyDown(KeyCode.K)) SceneManager.LoadScene("Overworld", LoadSceneMode.Single);
+
 		facing = new Vector2(GameManager.instance.mousePos.x - transform.position.x, GameManager.instance.mousePos.y - transform.position.y).normalized;
 		movement = Vector2.zero;
 
@@ -69,15 +71,6 @@ public class Player : MovableObject {
 				Movement();
 				break;
 		}
-
-		if (enableHillsCollision) {
-			Physics2D.IgnoreLayerCollision(0, 8, true);
-			enableHillsCollision = false;
-		}
-		if (disableHillsCollision) {
-			Physics2D.IgnoreLayerCollision(0, 8, false);
-			disableHillsCollision = false;
-		}
 	}
 
 	void FixedUpdate() {
@@ -103,10 +96,7 @@ public class Player : MovableObject {
 		movement *= speed;
 
 		if(Input.GetButtonDown("Jump")) {
-			animator.SetBool("Jump", true);
-		}
-		else {
-			animator.SetBool("Jump", false);
+			animator.SetTrigger(jumpHash);
 		}
 	}
 
@@ -150,6 +140,28 @@ public class Player : MovableObject {
 		}
 		else {
 			return false;
+		}
+	}
+
+	void ToggleHillCollision(int oneForTrueZeroForFalse) {
+		bool collideWithHills = (oneForTrueZeroForFalse == 0) ? false : true;
+		Physics2D.IgnoreLayerCollision(0, 8, collideWithHills);
+	}
+
+	void EnterPortal() {
+		animator.SetBool("CollidingWithPortal", false);
+		SceneManager.LoadScene("Dungeon", LoadSceneMode.Single);
+	}
+
+	void OnTriggerEnter2D(Collider2D collision) {
+		if(collision.CompareTag("Portal")) {
+			animator.SetBool("CollidingWithPortal", true);
+		}
+	}
+
+	void OnTriggerExit2D(Collider2D collision) {
+		if(collision.CompareTag("Portal")) {
+			animator.SetBool("CollidingWithPortal", false);
 		}
 	}
 

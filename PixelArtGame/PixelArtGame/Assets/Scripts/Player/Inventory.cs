@@ -7,7 +7,6 @@ public class Inventory : StorageContainer {
 
 	public int armorSlots;
 
-	[Header("ArmorSlots")]
 	public GameObject helmetSlot;
 	public GameObject chestplateSlot;
 	public GameObject leggingsSlot;

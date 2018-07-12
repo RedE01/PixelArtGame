@@ -17,7 +17,7 @@ public class GenerateTerrain : MonoBehaviour {
 	public Tile[] hillTiles;
 
 	readonly int chunkWidth = 10;
-	readonly int activeChunksRadius = 4;
+	readonly int activeChunksRadius = 3;
 	readonly int worldSize = 500;
 	readonly Vector2Int startArea = new Vector2Int(20, 10);
 	int seed = 0;
@@ -42,9 +42,9 @@ public class GenerateTerrain : MonoBehaviour {
 					GenerateChunk(dirtTilemap, dirtTiles, chunk, 90);
 					GenerateChunk(groundTilemap, grassTiles, chunk, 75);
 
-					GenerateHills(hillsTilemap1, chunk, 0.55f);
-					GenerateHills(hillsTilemap2, chunk, 0.7f);
-					GenerateHills(hillsTilemap3, chunk, 0.8f);
+					GenerateHills(hillsTilemap1, chunk, 0.45f);
+					GenerateHills(hillsTilemap2, chunk, 0.6f);
+					GenerateHills(hillsTilemap3, chunk, 0.7f);
 
 					GenerateTrees(chunk);
 					return;

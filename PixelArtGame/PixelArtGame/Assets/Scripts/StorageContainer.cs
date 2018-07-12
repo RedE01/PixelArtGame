@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 public abstract class StorageContainer : MonoBehaviour {
 
-	public GameObject parentObject;
 	public GameObject slot;
 	public int slots;
 	public int maxItems;
@@ -16,6 +15,7 @@ public abstract class StorageContainer : MonoBehaviour {
 
 	public ItemSlot[] itemSlots;
 
+	public GameObject parentObject;
 	protected Player playerScript;
 
 	protected virtual void Start() {
