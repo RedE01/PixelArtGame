@@ -90,12 +90,23 @@ public class Player : MovableObject {
 
 	private void Movement() {
 		movement = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+
+		if(movement.x > 0.01f || movement.y > 0.01f || movement.x < -0.01f || movement.y < -0.01f) {
+			animator.SetBool("PlayerMoving", true);
+
+			animator.SetFloat("MoveX", Input.GetAxis("Horizontal"));
+			animator.SetFloat("MoveY", Input.GetAxis("Vertical"));
+		}
+		else {
+			animator.SetBool("PlayerMoving", false);
+		}
+
 		if (movement.magnitude > 1) {
 			movement = movement.normalized;
 		}
 		movement *= speed;
 
-		if(Input.GetButtonDown("Jump")) {
+		if (Input.GetButtonDown("Jump")) {
 			animator.SetTrigger(jumpHash);
 		}
 	}

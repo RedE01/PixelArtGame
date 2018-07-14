@@ -4,13 +4,12 @@ using UnityEngine;
 
 public class CameraScript : MonoBehaviour {
 
-	Transform target;
+	public Transform target;
 	Vector2 pos, startShakePos;
 	bool shake;
 	float shakeMagnitude, shakeStrength, shakeTime, shakeSeedX, shakeSeedY;
 
 	void Start() {
-		target = GameObject.FindGameObjectWithTag("Player").transform;
 		pos = target.position;
 	}
 

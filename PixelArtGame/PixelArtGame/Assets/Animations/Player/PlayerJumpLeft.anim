@@ -5,7 +5,7 @@ AnimationClip:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: PlayerEnterPortal
+  m_Name: PlayerJumpLeft
   serializedVersion: 6
   m_Legacy: 0
   m_Compressed: 0
@@ -20,68 +20,34 @@ AnimationClip:
       - serializedVersion: 3
         time: 0
         value: {x: 0, y: 0, z: 0}
-        inSlope: {x: 0, y: -1.4478163, z: 0}
-        outSlope: {x: 0, y: -1.4478163, z: 0}
+        inSlope: {x: 0, y: 5.301248, z: 0}
+        outSlope: {x: 0, y: 5.301248, z: 0}
         tangentMode: 0
         weightedMode: 0
         inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
-        outWeight: {x: 0.33333334, y: 0.10683031, z: 0.33333334}
+        outWeight: {x: 0.33333334, y: 0.13607693, z: 0.33333334}
       - serializedVersion: 3
-        time: 0.26666668
-        value: {x: 0, y: -0.17133126, z: 0}
-        inSlope: {x: 0, y: 0.4375363, z: 0}
-        outSlope: {x: 0, y: 0.4375363, z: 0}
+        time: 0.25
+        value: {x: 0, y: 0.8179943, z: 0}
+        inSlope: {x: 0, y: -0.6055325, z: 0}
+        outSlope: {x: 0, y: -0.6055325, z: 0}
         tangentMode: 0
         weightedMode: 0
-        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
-        outWeight: {x: 0.33333334, y: 0.22754256, z: 0.33333334}
+        inWeight: {x: 0.33333334, y: 0.41100624, z: 0.33333334}
+        outWeight: {x: 0.33333334, y: 0.21882735, z: 0.33333334}
       - serializedVersion: 3
-        time: 0.65
-        value: {x: 0, y: 1.2890598, z: 0}
-        inSlope: {x: 0, y: -0.011119363, z: 0}
-        outSlope: {x: 0, y: -0.011119363, z: 0}
+        time: 0.45
+        value: {x: 0, y: 0.007254022, z: 0}
+        inSlope: {x: 0, y: -5.3385296, z: 0}
+        outSlope: {x: 0, y: -5.3385296, z: 0}
         tangentMode: 0
         weightedMode: 0
-        inWeight: {x: 0.33333334, y: 0.52326894, z: 0.33333334}
+        inWeight: {x: 0.33333334, y: 0.10525078, z: 0.33333334}
         outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
     path: PlayerSprite
-  - curve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: {x: -0.034, y: 0.135, z: 0}
-        inSlope: {x: 0, y: -1.4281285, z: 0}
-        outSlope: {x: 0, y: -1.4281285, z: 0}
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
-        outWeight: {x: 0.33333334, y: 0.5395296, z: 0.33333334}
-      - serializedVersion: 3
-        time: 0.26666668
-        value: {x: -0.034, y: -0.036326684, z: 0}
-        inSlope: {x: 0, y: 0.4312722, z: 0}
-        outSlope: {x: 0, y: 0.4312722, z: 0}
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
-        outWeight: {x: 0.33333334, y: 0.36377257, z: 0.33333334}
-      - serializedVersion: 3
-        time: 0.65
-        value: {x: -0.034, y: 1.4240792, z: 0}
-        inSlope: {x: 0, y: -0.028138015, z: 0}
-        outSlope: {x: 0, y: -0.028138015, z: 0}
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: {x: 0.33333334, y: 0.36378458, z: 0.33333334}
-        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    path: Shadow
   m_ScaleCurves: []
   m_FloatCurves:
   - curve:
@@ -89,7 +55,7 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 1
+        value: 0
         inSlope: Infinity
         outSlope: Infinity
         tangentMode: 103
@@ -97,8 +63,8 @@ AnimationClip:
         inWeight: 0
         outWeight: 0
       - serializedVersion: 3
-        time: 0.65
-        value: 1
+        time: 0.45
+        value: 0
         inSlope: Infinity
         outSlope: Infinity
         tangentMode: 103
@@ -115,9 +81,9 @@ AnimationClip:
   m_PPtrCurves:
   - curve:
     - time: 0
-      value: {fileID: 21300004, guid: 9aa6ae620e9ea5e49aeadfbbfc263f46, type: 3}
-    - time: 0.65
-      value: {fileID: 21300004, guid: 9aa6ae620e9ea5e49aeadfbbfc263f46, type: 3}
+      value: {fileID: 21300002, guid: 9aa6ae620e9ea5e49aeadfbbfc263f46, type: 3}
+    - time: 0.45
+      value: {fileID: 21300002, guid: 9aa6ae620e9ea5e49aeadfbbfc263f46, type: 3}
     attribute: m_Sprite
     path: PlayerSprite
     classID: 212
@@ -131,13 +97,6 @@ AnimationClip:
     genericBindings:
     - serializedVersion: 2
       path: 533382794
-      attribute: 1
-      script: {fileID: 0}
-      typeID: 4
-      customType: 0
-      isPPtrCurve: 0
-    - serializedVersion: 2
-      path: 1926924059
       attribute: 1
       script: {fileID: 0}
       typeID: 4
@@ -158,19 +117,19 @@ AnimationClip:
       customType: 23
       isPPtrCurve: 1
     pptrCurveMapping:
-    - {fileID: 21300004, guid: 9aa6ae620e9ea5e49aeadfbbfc263f46, type: 3}
-    - {fileID: 21300004, guid: 9aa6ae620e9ea5e49aeadfbbfc263f46, type: 3}
+    - {fileID: 21300002, guid: 9aa6ae620e9ea5e49aeadfbbfc263f46, type: 3}
+    - {fileID: 21300002, guid: 9aa6ae620e9ea5e49aeadfbbfc263f46, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 0.6666666
+    m_StopTime: 0.46666667
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
     m_HasAdditiveReferencePose: 0
-    m_LoopTime: 0
+    m_LoopTime: 1
     m_LoopBlend: 0
     m_LoopBlendOrientation: 0
     m_LoopBlendPositionY: 0
@@ -193,6 +152,15 @@ AnimationClip:
         weightedMode: 0
         inWeight: 0.33333334
         outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.45
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
@@ -206,29 +174,29 @@ AnimationClip:
       - serializedVersion: 3
         time: 0
         value: 0
-        inSlope: -1.4478163
-        outSlope: -1.4478163
+        inSlope: 5.301248
+        outSlope: 5.301248
         tangentMode: 0
         weightedMode: 0
         inWeight: 0.33333334
-        outWeight: 0.10683031
+        outWeight: 0.13607693
       - serializedVersion: 3
-        time: 0.26666668
-        value: -0.17133126
-        inSlope: 0.4375363
-        outSlope: 0.4375363
+        time: 0.25
+        value: 0.8179943
+        inSlope: -0.6055325
+        outSlope: -0.6055325
         tangentMode: 0
         weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.22754256
+        inWeight: 0.41100624
+        outWeight: 0.21882735
       - serializedVersion: 3
-        time: 0.65
-        value: 1.2890598
-        inSlope: -0.011119363
-        outSlope: -0.011119363
+        time: 0.45
+        value: 0.007254022
+        inSlope: -5.3385296
+        outSlope: -5.3385296
         tangentMode: 0
         weightedMode: 0
-        inWeight: 0.52326894
+        inWeight: 0.10525078
         outWeight: 0.33333334
       m_PreInfinity: 2
       m_PostInfinity: 2
@@ -249,6 +217,15 @@ AnimationClip:
         weightedMode: 0
         inWeight: 0.33333334
         outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.45
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
@@ -261,82 +238,7 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: -0.034
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 136
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    attribute: m_LocalPosition.x
-    path: Shadow
-    classID: 4
-    script: {fileID: 0}
-  - curve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 0.135
-        inSlope: -1.4281285
-        outSlope: -1.4281285
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.5395296
-      - serializedVersion: 3
-        time: 0.26666668
-        value: -0.036326684
-        inSlope: 0.4312722
-        outSlope: 0.4312722
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.36377257
-      - serializedVersion: 3
-        time: 0.65
-        value: 1.4240792
-        inSlope: -0.028138015
-        outSlope: -0.028138015
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0.36378458
-        outWeight: 0.33333334
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    attribute: m_LocalPosition.y
-    path: Shadow
-    classID: 4
-    script: {fileID: 0}
-  - curve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
         value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 136
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    attribute: m_LocalPosition.z
-    path: Shadow
-    classID: 4
-    script: {fileID: 0}
-  - curve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 1
         inSlope: Infinity
         outSlope: Infinity
         tangentMode: 103
@@ -344,8 +246,8 @@ AnimationClip:
         inWeight: 0
         outWeight: 0
       - serializedVersion: 3
-        time: 0.65
-        value: 1
+        time: 0.45
+        value: 0
         inSlope: Infinity
         outSlope: Infinity
         tangentMode: 103
@@ -364,8 +266,15 @@ AnimationClip:
   m_HasMotionFloatCurves: 0
   m_GenerateMotionCurves: 0
   m_Events:
-  - time: 0.65
-    functionName: EnterPortal
+  - time: 0.05
+    functionName: ToggleHillCollision
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 1
+    messageOptions: 0
+  - time: 0.41666666
+    functionName: ToggleHillCollision
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
