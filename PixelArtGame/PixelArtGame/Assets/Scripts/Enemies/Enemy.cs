@@ -34,7 +34,7 @@ public abstract class Enemy : MovableObject {
 		target = transform.position;
 	}
 
-	void Update() {
+	new void Update() {
 		switch (enemyState) {
 			case EnemyState.Idle:
 				if (Vector2.Distance(transform.position, target) < 0.05f) {
@@ -79,6 +79,7 @@ public abstract class Enemy : MovableObject {
 				}
 				break;
 		}
+		base.Update();
 	}
 
 	void FixedUpdate() {

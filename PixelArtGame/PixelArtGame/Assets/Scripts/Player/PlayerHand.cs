@@ -6,6 +6,8 @@ public class PlayerHand : MonoBehaviour {
 
 	[HideInInspector]
 	public Item item;
+	public int sortingOrderOffset = 1;
+	public bool flipX;
 
 	public SpriteRenderer playerSpriteRenderer;
 
@@ -18,10 +20,12 @@ public class PlayerHand : MonoBehaviour {
 
 	void Update() {
 		UpdateHand();
+
+		if (flipX != spriteRenderer.flipX) spriteRenderer.flipX = flipX;
 	}
 
-	void FixedUpdate() {
-		spriteRenderer.sortingOrder = playerSpriteRenderer.sortingOrder + 10;
+	void LateUpdate() {
+		spriteRenderer.sortingOrder = playerSpriteRenderer.sortingOrder + sortingOrderOffset;
 	}
 
 	void UpdateHand() {

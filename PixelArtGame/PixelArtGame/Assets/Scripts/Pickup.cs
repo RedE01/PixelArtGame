@@ -26,11 +26,12 @@ public class Pickup : MovableObject {
 		inventory = GameObject.FindGameObjectWithTag("Player").GetComponent<Inventory>();
 	}
 
-	void Update() {
+	new void Update() {
 		float sinCurve = Mathf.Sin(Time.time * speed);
 		float shadowCurve = (-sinCurve * 0.3f + 2) * item.pickupRadius;
 		shadowObj.transform.localScale = new Vector2(shadowCurve, shadowCurve);
 		pickupObj.transform.localPosition = new Vector2(0, sinCurve * height + height * 2.5f);
+		base.Update();
 	}
 
 	void OnTriggerEnter2D(Collider2D collision) {

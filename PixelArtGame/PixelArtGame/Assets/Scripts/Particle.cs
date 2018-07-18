@@ -11,6 +11,6 @@ public class Particle : MonoBehaviour {
 	}
 
 	void LateUpdate() {
-		psr.sortingOrder = (int)(transform.position.y - 0.5f * GameManager.instance.sortingOrderPrecision);
+		psr.sortingOrder = (int)((transform.position.y - 0.5f) * GameManager.instance.sortingOrderPrecision);
 	}
 }

@@ -519,6 +519,11 @@ Prefab:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114334920475728174, guid: 5a334d11ed68f974d87c66b4dfd18718,
+        type: 2}
+      propertyPath: parentObject
+      value: 
+      objectReference: {fileID: 1163653926}
     - target: {fileID: 114381748699634974, guid: 5a334d11ed68f974d87c66b4dfd18718,
         type: 2}
       propertyPath: parentObject
@@ -544,16 +549,11 @@ Prefab:
       propertyPath: bootsSlot
       value: 
       objectReference: {fileID: 1171249390}
-    - target: {fileID: 114334920475728174, guid: 5a334d11ed68f974d87c66b4dfd18718,
-        type: 2}
-      propertyPath: parentObject
-      value: 
-      objectReference: {fileID: 1163653926}
     - target: {fileID: 212041415296131040, guid: 5a334d11ed68f974d87c66b4dfd18718,
         type: 2}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300002, guid: 9aa6ae620e9ea5e49aeadfbbfc263f46,
+      objectReference: {fileID: 21300000, guid: 9aa6ae620e9ea5e49aeadfbbfc263f46,
         type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5a334d11ed68f974d87c66b4dfd18718, type: 2}

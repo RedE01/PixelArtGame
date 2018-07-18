@@ -71,8 +71,10 @@ public class GenerateTerrain : MonoBehaviour {
 						}
 					}
 					if (test) {
-						//GameObject wa =
-						Instantiate(tree, treePos[treeNumber], Quaternion.identity, treeParent);
+						Vector3Int tilePos = new Vector3Int(pos.x + x, pos.y + y, 0);
+						if (hillsTilemap1.GetTile(tilePos) == null) {
+							Instantiate(tree, treePos[treeNumber], Quaternion.identity, treeParent);
+						}
 						//if (groundTilemap.GetTile(new Vector3Int(pos.x + x, pos.y + y, 0)) == null) {
 						//	wa.name = "RIP";
 						//}

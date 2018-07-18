@@ -40,7 +40,7 @@ public class Player : MovableObject {
 		playerHandScript = GetComponentInChildren<PlayerHand>();
 	}
 
-	void Update() {
+	new void Update() {
 		if (Input.GetKeyDown(KeyCode.K)) SceneManager.LoadScene("Overworld", LoadSceneMode.Single);
 
 		facing = new Vector2(GameManager.instance.mousePos.x - transform.position.x, GameManager.instance.mousePos.y - transform.position.y).normalized;
@@ -71,6 +71,7 @@ public class Player : MovableObject {
 				Movement();
 				break;
 		}
+		base.Update();
 	}
 
 	void FixedUpdate() {
@@ -89,22 +90,23 @@ public class Player : MovableObject {
 	}
 
 	private void Movement() {
-		movement = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
-
-		if(movement.x > 0.01f || movement.y > 0.01f || movement.x < -0.01f || movement.y < -0.01f) {
-			animator.SetBool("PlayerMoving", true);
-
-			animator.SetFloat("MoveX", Input.GetAxis("Horizontal"));
-			animator.SetFloat("MoveY", Input.GetAxis("Vertical"));
-		}
-		else {
-			animator.SetBool("PlayerMoving", false);
-		}
+		movement = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical")); ;
 
 		if (movement.magnitude > 1) {
 			movement = movement.normalized;
 		}
 		movement *= speed;
+
+		Vector2 input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+		if (input.x != 0 || input.y != 0) {
+			animator.SetBool("PlayerMoving", true);
+
+			animator.SetFloat("MoveX", input.x);
+			animator.SetFloat("MoveY", input.y);
+		}
+		else {
+			animator.SetBool("PlayerMoving", false);
+		}
 
 		if (Input.GetButtonDown("Jump")) {
 			animator.SetTrigger(jumpHash);
@@ -175,7 +177,6 @@ public class Player : MovableObject {
 			animator.SetBool("CollidingWithPortal", false);
 		}
 	}
-
 	//private void Build() {
 	//	if(Input.GetKeyDown(KeyCode.Mouse0)) {
 	//		buildScript.PlaceObject();
