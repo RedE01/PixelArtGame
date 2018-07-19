@@ -6,43 +6,28 @@ public class DungeonGenerator : MonoBehaviour {
 
 	public GameObject roomPrefab;
 	public GameObject startRoom;
-	public Vector2 roomSize;
 	public CameraScript cameraScript;
+	public Vector2 roomStartPos;
+	public Transform player;
 
 	[HideInInspector]
 	public Transform cameraTarget;
 
 	List<GameObject> Rooms = new List<GameObject>();
 	Vector2 currentRoomPos;
+	Vector2 roomSize;
 
 	void Start() {
 		Rooms.Add(startRoom);
 		currentRoomPos = startRoom.transform.position;
 		cameraTarget = startRoom.transform;
 
-		roomSize *= 2f;
+		roomSize = roomPrefab.GetComponent<SpriteRenderer>().size;
 	}
 
-	void Update() {
-		if (Input.GetKeyDown(KeyCode.O)) {
-			if (!CheckForRoom(Vector2Int.up)) {
-				GenerateRoom(Vector2Int.up);
-			}
-		}
-		if (Input.GetKeyDown(KeyCode.I)) {
-			if (!CheckForRoom(Vector2Int.left)) {
-				GenerateRoom(Vector2Int.left);
-			}
-		}
-		if (Input.GetKeyDown(KeyCode.P)) {
-			if (!CheckForRoom(Vector2Int.right)) {
-				GenerateRoom(Vector2Int.right);
-			}
-		}
-		if (Input.GetKeyDown(KeyCode.L)) {
-			if (!CheckForRoom(Vector2Int.down)) {
-				GenerateRoom(Vector2Int.down);
-			}
+	public void GoToRoom(Vector2Int dir) {
+		if (!CheckForRoom(dir)) {
+			GenerateRoom(dir);
 		}
 	}
 
@@ -51,7 +36,7 @@ public class DungeonGenerator : MonoBehaviour {
 
 		foreach (GameObject go in Rooms) {
 			if((Vector2)go.transform.position == pos) {
-				SetRoom(go);
+				SetRoom(go, pos, dir);
 
 				return true;
 			}
@@ -64,10 +49,15 @@ public class DungeonGenerator : MonoBehaviour {
 
 		GameObject room = Instantiate(roomPrefab, newRoomPos, Quaternion.identity);
 		Rooms.Add(room);
-		SetRoom(room);
+		SetRoom(room, newRoomPos, dir);
 	}
 
-	void SetRoom(GameObject room) {
+	void SetRoom(GameObject room, Vector2 playerPos, Vector2Int dir) {
 		cameraScript.target = room.transform;
+		currentRoomPos = room.transform.position;
+
+		playerPos -= roomStartPos * dir;
+		playerPos.y -= 1;
+		player.position = playerPos;
 	}
 }

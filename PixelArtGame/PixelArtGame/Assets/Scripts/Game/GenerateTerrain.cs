@@ -20,12 +20,13 @@ public class GenerateTerrain : MonoBehaviour {
 	readonly int activeChunksRadius = 3;
 	readonly int worldSize = 500;
 	readonly Vector2Int startArea = new Vector2Int(20, 10);
-	int seed = 0;
+	int seed;
 	float scale = 0.75f;
 	Transform player;
 
 	void Start() {
 		player = GameObject.FindGameObjectWithTag("Player").transform;
+		seed = Random.Range(0, 10000);
 
 		GenerateAroundPlayer();
 	}
@@ -113,8 +114,8 @@ public class GenerateTerrain : MonoBehaviour {
 
 		for (int x = 0; x < chunkWidth; x++) {
 			for (int y = 0; y < chunkWidth; y++) {
-				float xCoord = (float)x / (float)chunkWidth * (float)scale + (float)chunk.x * scale + worldSize;
-				float yCoord = (float)y / (float)chunkWidth * (float)scale + (float)chunk.y * scale + worldSize;
+				float xCoord = (float)x / (float)chunkWidth * (float)scale + (float)chunk.x * scale + worldSize + seed;
+				float yCoord = (float)y / (float)chunkWidth * (float)scale + (float)chunk.y * scale + worldSize + seed;
 
 				if (!CheckPerlinNoiseAtPos(xCoord, yCoord, 0, 0, checkOver, x, y, pos)) {
 					bool below = false;
