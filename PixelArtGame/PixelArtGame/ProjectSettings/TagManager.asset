@@ -9,6 +9,7 @@ TagManager:
   - Object
   - Portal
   - PlayerHand
+  - Chest
   layers:
   - Default
   - TransparentFX

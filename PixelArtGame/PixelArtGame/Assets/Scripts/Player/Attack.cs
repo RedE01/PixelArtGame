@@ -7,7 +7,7 @@ public class Attack : MonoBehaviour {
 	public float hitTime, attackTime;
 
 	ParticleSystem attackParticleSystem;
-	List<Enemy> enemiesInRange = new List<Enemy>();
+	public List<Enemy> enemiesInRange = new List<Enemy>();
 	Player playerScript;
 	Rigidbody2D rb;
 	CameraScript cameraScript;
@@ -61,17 +61,5 @@ public class Attack : MonoBehaviour {
 
 	void EndAttack() {
 		playerScript.playerState = Player.PlayerState.Default;
-	}
-
-	void OnTriggerEnter2D(Collider2D collision) {
-		if(collision.gameObject.CompareTag("Enemy")) {
-			enemiesInRange.Add(collision.gameObject.GetComponent<Enemy>());
-		}
-	}
-
-	void OnTriggerExit2D(Collider2D collision) {
-		if (collision.gameObject.CompareTag("Enemy")) {
-			enemiesInRange.Remove(collision.gameObject.GetComponent<Enemy>());
-		}
 	}
 }

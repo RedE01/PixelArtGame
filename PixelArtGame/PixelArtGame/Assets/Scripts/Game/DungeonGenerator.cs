@@ -11,6 +11,8 @@ public class DungeonGenerator : MonoBehaviour {
 	public CameraScript cameraScript;
 	public Vector2 roomStartPos;
 	public Transform player;
+	[Space]
+	public GameObject[] Monsters;
 
 	[HideInInspector]
 	public Transform cameraTarget;
@@ -39,9 +41,10 @@ public class DungeonGenerator : MonoBehaviour {
 
 		if (go == null) {
 			GenerateRoom(dir);
+			SpawnEnemies(2, 10);
 		}
 		else {
-			SetRoom(go, pos, dir);
+			SetRoom(go, dir);
 		}
 	}
 
@@ -59,7 +62,7 @@ public class DungeonGenerator : MonoBehaviour {
 
 		GameObject room = Instantiate(roomPrefab, newRoomPos, Quaternion.identity);
 		Rooms.Add(room);
-		SetRoom(room, newRoomPos, dir);
+		SetRoom(room, dir);
 
 		for(int i = 0; i < directions.Length; i++) {
 			GameObject r = CheckForRoom(GetRoomPosAtDirection(directions[i]));
@@ -106,12 +109,24 @@ public class DungeonGenerator : MonoBehaviour {
 		else return "DoorParentB";
 	}
 
-	void SetRoom(GameObject room, Vector2 playerPos, Vector2Int dir) {
+	void SetRoom(GameObject room, Vector2Int dir) {
 		cameraScript.target = room.transform;
 		currentRoomPos = room.transform.position;
 
-		playerPos -= roomStartPos * dir;
-		playerPos.y -= 1;
+		Vector2 playerPos = room.transform.Find(GetDoorParent(dir * -1)).position;
 		player.position = playerPos;
+	}
+
+	void SpawnEnemies(int minMonsters, int maxMonsters) {
+		int monsterCount = Random.Range(minMonsters, maxMonsters);
+
+		for (int i = 0; i < monsterCount; i++) {
+			Vector2 pos = currentRoomPos;
+			pos.x += Random.Range(-9f, 9f);
+			pos.y += Random.Range(-4f, 2f);
+
+			int monster = Random.Range(0, Monsters.Length);
+			Instantiate(Monsters[monster], pos, Quaternion.identity);
+		}
 	}
 }
