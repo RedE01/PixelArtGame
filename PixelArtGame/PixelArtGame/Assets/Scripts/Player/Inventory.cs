@@ -25,18 +25,18 @@ public class Inventory : StorageContainer {
 			SetupSlot(i);
 		}
 
-		CreateSlotGrid();
+		CreateSlotGrid("slot");
 
 		UpdateSlots(); 
 	}
 
 	void Update() {
-		if(Input.GetButtonDown("Inventory")) {
-			parentObject.SetActive(!parentObject.activeSelf);
-			playerScript.playerState = parentObject.activeSelf ? Player.PlayerState.Inventory : Player.PlayerState.Default;
+		if(Input.GetButtonDown("Inventory") && playerScript.playerState != Player.PlayerState.Inventory) {
+			parentObject.SetActive(true);
+			playerScript.playerState = Player.PlayerState.Inventory;
 			UpdateSlots();
 		}
-		if (Input.GetButtonDown("Cancel")) {
+		else if (Input.GetButtonDown("Cancel") || Input.GetButtonDown("Inventory")) {
 			parentObject.SetActive(false);
 			playerScript.playerState = Player.PlayerState.Default;
 			UpdateSlots();

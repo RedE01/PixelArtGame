@@ -3,7 +3,12 @@ guid: 26a7ae7fdadf9bf4882c704c39d9c011
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - slot: {fileID: 1600093400197738, guid: c1f275627b3de494db22fccd04a7f34f, type: 2}
+  - playerScript: {instanceID: 0}
+  - parentObject: {instanceID: 0}
+  - chestTier: {fileID: 11400000, guid: 747d89adb1381b847b199ccf6d4e67c0, type: 2}
+  - Inventory: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

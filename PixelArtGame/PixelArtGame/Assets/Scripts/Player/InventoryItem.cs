@@ -14,12 +14,14 @@ public class InventoryItem : MonoBehaviour {
 
 	Inventory inventoryScript;
 	Hotbar hotbarScript;
+	ChestUI chestUIScript;
 	RectTransform rTransform;
 	bool mouseOver;
 
 	void Start() {
 		inventoryScript = GameObject.FindGameObjectWithTag("Player").GetComponent<Inventory>();
 		hotbarScript = inventoryScript.GetComponent<Hotbar>();
+		chestUIScript = inventoryScript.GetComponent<ChestUI>();
 		rTransform = GetComponent<RectTransform>();
 	}
 
@@ -54,6 +56,9 @@ public class InventoryItem : MonoBehaviour {
 		}
 		else if(hit.collider.name == "HotbarBackground") {
 			PlaceItemInSlot(hotbarScript, GetNearestSlot(hotbarScript));
+		}
+		else if (hit.collider.name == "ChestContainer") {
+			PlaceItemInSlot(chestUIScript, GetNearestSlot(chestUIScript));
 		}
 		containerScript.UpdateSlots();
 		rTransform.anchoredPosition = Vector2.zero;

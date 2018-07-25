@@ -10,32 +10,32 @@ public abstract class StorageContainer : MonoBehaviour {
 	public int maxItems;
 	public int slotOffset;
 	public int topOffset;
+	public Player playerScript;
 
 	int slotSize;
 
 	public ItemSlot[] itemSlots;
 
 	public GameObject parentObject;
-	protected Player playerScript;
+	public GameObject inventoryObject;
 
 	protected virtual void Start() {
 		Initialize();
 
-		CreateSlotGrid();
+		CreateSlotGrid("slot");
 		UpdateSlots();
 	}
 
 	protected void Initialize() {
 		itemSlots = new ItemSlot[slots];
-		playerScript = GetComponent<Player>();
 		slotSize = (int)slot.GetComponent<RectTransform>().sizeDelta.x;
 	}
 
-	protected void CreateSlotGrid() {
+	protected void CreateSlotGrid(string slotName) {
 		Vector2 pos = new Vector2(slotOffset, -topOffset);
 		for (int i = 0; i < slots; i++) {
 			itemSlots[i].slot = Instantiate(slot, Vector2.zero, Quaternion.identity, parentObject.transform);
-			itemSlots[i].slot.name = "Slot";
+			itemSlots[i].slot.name = slotName;
 
 			SetupSlot(i);
 
@@ -46,6 +46,7 @@ public abstract class StorageContainer : MonoBehaviour {
 				pos.x = slotOffset;
 				pos.y -= slotOffset + slotSize;
 			}
+			itemSlots[i].slot.transform.SetParent(inventoryObject.transform, true);
 		}
 	}
 
