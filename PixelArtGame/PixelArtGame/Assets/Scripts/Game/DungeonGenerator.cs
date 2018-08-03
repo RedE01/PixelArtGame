@@ -7,12 +7,15 @@ public class DungeonGenerator : MonoBehaviour {
 	public GameObject roomPrefab;
 	public GameObject startRoom;
 	public GameObject DoorLPrefab, DoorRPrefab, DoorTPrefab, DoorBPrefab;
+	public GameObject chest;
+	public ChestTier chestTier;
 	[Space]
 	public CameraScript cameraScript;
 	public Vector2 roomStartPos;
 	public Transform player;
 	[Space]
 	public GameObject[] Monsters;
+	public int monsterMin, monsterMax;
 
 	[HideInInspector]
 	public Transform cameraTarget;
@@ -41,7 +44,7 @@ public class DungeonGenerator : MonoBehaviour {
 
 		if (go == null) {
 			GenerateRoom(dir);
-			SpawnEnemies(2, 10);
+			SpawnEnemies(monsterMin, monsterMax);
 		}
 		else {
 			SetRoom(go, dir);
@@ -68,9 +71,7 @@ public class DungeonGenerator : MonoBehaviour {
 			GameObject r = CheckForRoom(GetRoomPosAtDirection(directions[i]));
 
 			if(r != null) {
-				//Debug.Log("Room in direction: " + directions[i]);
 				if(r.transform.Find(GetDoorParent(directions[i] * -1)).childCount > 0) {
-					//Debug.Log("OH shit");
 					CreateDoor(room, directions[i]);
 				}
 			}
@@ -79,7 +80,7 @@ public class DungeonGenerator : MonoBehaviour {
 					CreateDoor(room, directions[i]);
 			}
 		}
-
+		GenerateChests(room);
 	}
 
 	void CreateDoor(GameObject room, Vector2Int dir) {
@@ -127,6 +128,19 @@ public class DungeonGenerator : MonoBehaviour {
 
 			int monster = Random.Range(0, Monsters.Length);
 			Instantiate(Monsters[monster], pos, Quaternion.identity);
+		}
+	}
+
+	void GenerateChests(GameObject room) {
+		float rand = Random.Range(0f, 1f);
+
+		if(rand < 0.2f) {
+			Vector2 pos = currentRoomPos;
+			pos.x += Random.Range(-7f, 7f);
+			pos.y += Random.Range(-3f, 1f);
+
+			GameObject c = Instantiate(chest, pos, Quaternion.identity, room.transform);
+			c.GetComponent<Chest>().chestTier = chestTier;
 		}
 	}
 }

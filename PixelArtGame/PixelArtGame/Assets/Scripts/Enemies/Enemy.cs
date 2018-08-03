@@ -10,6 +10,7 @@ public abstract class Enemy : MovableObject {
 		Attacking,
 		Dead
 	}
+	[HideInInspector]
 	public EnemyState enemyState = EnemyState.Idle;
 
 	public int health, damageKnockback;
@@ -23,57 +24,49 @@ public abstract class Enemy : MovableObject {
 	protected Vector2 target;
 	protected Rigidbody2D rb;
 	protected Vector2 movement;
+	protected float damageCounter = 0;
+	protected int attackHash, idleHash, chaseHash;
+	protected Animator animator;
 
-	float damageCounter = 0;
 
-	void Start() {
+	public void Start() {
 		speed = normalSpeed;
 		player = GameObject.FindGameObjectWithTag("Player");
 		playerScript = player.GetComponent<Player>();
 		rb = GetComponent<Rigidbody2D>();
 		target = transform.position;
+		animator = GetComponent<Animator>();
+
+		animator.SetBool(idleHash, true);
 	}
 
-	new void Update() {
+	override public void Update() {
 		switch (enemyState) {
 			case EnemyState.Idle:
-				if (Vector2.Distance(transform.position, target) < 0.05f) {
-					SetRandomTarget(idleWalkDistance);
-				}
-				MoveToTarget();
-				speed = normalSpeed * 0.5f;
-
 				if (Vector2.Distance(transform.position, player.transform.position) < chasingRange) {
+					animator.SetBool(idleHash, false);
+					animator.SetBool(chaseHash, true);
 					enemyState = EnemyState.Chasing;
-					break;
-				}
-				if (Vector2.Distance(transform.position, target) < .5f) {
-					SetRandomTarget(idleWalkDistance);
 				}
 				break;
-			case EnemyState.Chasing:
-				target = player.transform.position;
-				MoveToTarget();
-				speed = normalSpeed;
 
+			case EnemyState.Chasing:
 				if(Vector2.Distance(transform.position, target) < attackRange) {
+					animator.SetBool(chaseHash, false);
+					animator.SetBool(attackHash, true);
 					enemyState = EnemyState.Attacking;
 				}
 				if (Vector2.Distance(transform.position, target) > chasingRange) {
+					animator.SetBool(chaseHash, false);
+					animator.SetBool(idleHash, true);
 					enemyState = EnemyState.Idle;
 				}
 				break;
+
 			case EnemyState.Attacking:
-				movement = Vector2.zero;
-
-				damageCounter += Time.deltaTime;
-
-				if(damageCounter > hitTime) {
-					playerScript.Damage(10, transform.position, attackKnockback);
-					damageCounter = 0;
-				}
-
 				if (Vector2.Distance(transform.position, player.transform.position) > attackRange) {
+					animator.SetBool(attackHash, false);
+					animator.SetBool(chaseHash, true);
 					enemyState = EnemyState.Chasing;
 					damageCounter = 0;
 				}
@@ -84,6 +77,28 @@ public abstract class Enemy : MovableObject {
 
 	void FixedUpdate() {
 		rb.AddForce(movement * speed);
+	}
+
+	public void Patroll() {
+		if (Vector2.Distance(transform.position, target) < 0.05f) {
+			SetRandomTarget(idleWalkDistance);
+		}
+		MoveToTarget();
+	}
+
+	public void ChaseTarget() {
+		target = player.transform.position;
+		MoveToTarget();
+	}
+
+	public void AttackTarget() {
+		movement = Vector2.zero;
+
+		damageCounter += Time.deltaTime;
+		if (damageCounter > hitTime) {
+			playerScript.Damage(10, transform.position, attackKnockback);
+			damageCounter = 0;
+		}
 	}
 
 	public bool Damage(Vector2 attackPosition, int damageAmmount) {
@@ -110,5 +125,9 @@ public abstract class Enemy : MovableObject {
 	void SetRandomTarget(float maxDist) {
 		target.x = Random.Range(0, maxDist) + transform.position.x - maxDist * 0.5f;
 		target.y = Random.Range(0, maxDist) + transform.position.y - maxDist * 0.5f;
+	}
+
+	public void SetSpeed(float speedMultiplier) {
+		speed = normalSpeed * speedMultiplier;
 	}
 }

@@ -37,7 +37,7 @@ public class Pickup : MovableObject {
 	void OnTriggerEnter2D(Collider2D collision) {
 		if(collision.gameObject.CompareTag("Player")) {
 			for(int i = 0; i < inventory.itemSlots.GetLength(0); i++) {
-				if(inventory.itemSlots[i].item == null || (inventory.itemSlots[i].item == item && inventory.itemSlots[i].itemCount < inventory.maxItems)) {
+				if(inventory.itemSlots[i].item == null || (inventory.itemSlots[i].item == item && inventory.itemSlots[i].itemCount < item.stackSize)) {
 					inventory.itemSlots[i].item = item;
 					inventory.itemSlots[i].itemCount++;
 					inventory.UpdateSlots();

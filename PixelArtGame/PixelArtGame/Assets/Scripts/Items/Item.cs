@@ -16,6 +16,7 @@ public class Item : ScriptableObject {
 	public new string name;
 	public Sprite inventorySprite;
 	public Sprite equippedSprite;
+	public int stackSize = 10;
 
 	[Range(0.4f, 2)]
 	public float pickupRadius = 0.4f;

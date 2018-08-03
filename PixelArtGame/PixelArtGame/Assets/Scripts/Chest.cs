@@ -5,7 +5,9 @@ using UnityEngine;
 public class Chest : MonoBehaviour {
 
 	public ChestTier chestTier;
+	[HideInInspector]
 	public Item[] chestItems;
+	[HideInInspector]
 	public int[] itemCount;
 
 	[HideInInspector]
@@ -19,8 +21,9 @@ public class Chest : MonoBehaviour {
 		playerScript = player.GetComponent<Player>();
 		chestUI = player.GetComponent<ChestUI>();
 
-		chestItems = new Item[chestUI.itemSlots.Length];
-		itemCount = new int[chestUI.itemSlots.Length];
+		int items = chestUI.slots;
+		chestItems = new Item[items];
+		itemCount = new int[items];
 
 		GenerateChest();
 	}
@@ -48,7 +51,8 @@ public class Chest : MonoBehaviour {
 
 			if (slotItem != null) {
 				chestItems[i] = slotItem;
-				itemCount[i] = 1;
+				int count = Random.Range(1, slotItem.stackSize);
+				itemCount[i] = count;
 			}
 			else {
 				itemCount[i] = 0;

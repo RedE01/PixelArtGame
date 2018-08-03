@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Attack : MonoBehaviour {
 
-	public float hitTime, attackTime;
+	public float hitTime, attackTime, dashForce;
 
 	ParticleSystem attackParticleSystem;
 	public List<Enemy> enemiesInRange = new List<Enemy>();
@@ -35,7 +35,7 @@ public class Attack : MonoBehaviour {
 	public void DashAttack() {
 		playerScript.playerState = Player.PlayerState.Attacking;
 
-		rb.AddForce(playerScript.facing * 100, ForceMode2D.Impulse);
+		rb.AddForce(playerScript.facing * dashForce, ForceMode2D.Impulse);
 	}
 
 	private void SwordParticles() {

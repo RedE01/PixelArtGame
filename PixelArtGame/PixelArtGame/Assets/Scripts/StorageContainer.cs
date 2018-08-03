@@ -7,7 +7,6 @@ public abstract class StorageContainer : MonoBehaviour {
 
 	public GameObject slot;
 	public int slots;
-	public int maxItems;
 	public int slotOffset;
 	public int topOffset;
 	public Player playerScript;

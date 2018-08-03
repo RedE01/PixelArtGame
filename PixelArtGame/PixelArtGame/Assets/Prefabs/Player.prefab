@@ -186,7 +186,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1076437112664980}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -1.157, z: 0}
+  m_LocalPosition: {x: 0, y: -1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4700666396774908}
@@ -438,15 +438,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70bdcf596a893aa4a913c2172b27c242, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  slot: {fileID: 0}
-  slots: 0
-  maxItems: 0
-  slotOffset: 0
-  topOffset: 0
-  playerScript: {fileID: 0}
+  slot: {fileID: 1600093400197738, guid: c1f275627b3de494db22fccd04a7f34f, type: 2}
+  slots: 20
+  slotOffset: 20
+  topOffset: 50
+  playerScript: {fileID: 114056793145663176}
   parentObject: {fileID: 0}
-  characterSlots: []
-  Inventory: {fileID: 0}
+  inventoryObject: {fileID: 0}
+  characterSlots:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!114 &114114720478576304
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -471,11 +476,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   slot: {fileID: 1600093400197738, guid: c1f275627b3de494db22fccd04a7f34f, type: 2}
   slots: 9
-  maxItems: 10
   slotOffset: 20
   topOffset: 20
   playerScript: {fileID: 114056793145663176}
   parentObject: {fileID: 0}
+  inventoryObject: {fileID: 0}
   hotbarKeyPressed: 0
 --- !u!114 &114381748699634974
 MonoBehaviour:
@@ -490,11 +495,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   slot: {fileID: 1600093400197738, guid: c1f275627b3de494db22fccd04a7f34f, type: 2}
   slots: 36
-  maxItems: 10
   slotOffset: 20
   topOffset: 50
   playerScript: {fileID: 114056793145663176}
   parentObject: {fileID: 0}
+  inventoryObject: {fileID: 0}
   armorSlots: 4
   helmetSlot: {fileID: 0}
   chestplateSlot: {fileID: 0}
@@ -513,6 +518,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hitTime: 0.2
   attackTime: 0.4
+  dashForce: 100
   enemiesInRange: []
 --- !u!114 &114625476933737358
 MonoBehaviour:

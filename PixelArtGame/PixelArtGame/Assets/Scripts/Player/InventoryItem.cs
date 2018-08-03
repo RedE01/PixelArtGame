@@ -12,6 +12,7 @@ public class InventoryItem : MonoBehaviour {
 	[HideInInspector]
 	public StorageContainer containerScript;
 
+	RectTransform UITransform;
 	Inventory inventoryScript;
 	Hotbar hotbarScript;
 	ChestUI chestUIScript;
@@ -23,6 +24,12 @@ public class InventoryItem : MonoBehaviour {
 		hotbarScript = inventoryScript.GetComponent<Hotbar>();
 		chestUIScript = inventoryScript.GetComponent<ChestUI>();
 		rTransform = GetComponent<RectTransform>();
+		UITransform = GameObject.Find("UI").GetComponent<RectTransform>();
+	}
+
+	void OnDisable() {
+		if(rTransform != null)
+			rTransform.anchoredPosition = Vector2.zero;
 	}
 
 	void Update() {
@@ -75,8 +82,9 @@ public class InventoryItem : MonoBehaviour {
 	int GetNearestSlot(StorageContainer contScript) {
 		Vector3 nearest = Vector2.zero;
 		int nearestSlotNumb = 0;
-		Vector3 offset = containerScript.itemSlots[slotNumber].slotRectTransform.sizeDelta * 0.5f;
-		offset.y *= -1;
+		float UIscale = UITransform.localScale.x;
+		Vector3 offset = containerScript.itemSlots[slotNumber].slotRectTransform.sizeDelta * 0.5f * UIscale;
+		offset.y *= -1f;
 		for (int i = 0; i < contScript.itemSlots.Length; i++) {
 			if (Vector2.Distance(transform.position, contScript.itemSlots[i].slotRectTransform.position + offset) < Vector2.Distance(transform.position, nearest + offset)) {
 				nearest = contScript.itemSlots[i].slotRectTransform.position;
@@ -87,33 +95,42 @@ public class InventoryItem : MonoBehaviour {
 	}
 
 	void PlaceItemInSlot(StorageContainer contScript, int nearestSlotNumb) {
+		int maxItemStack = containerScript.itemSlots[slotNumber].item.stackSize;
+		Item currentItem = containerScript.itemSlots[slotNumber].item;
+		Item targetItem = contScript.itemSlots[nearestSlotNumb].item;
+		int currentItemCount = containerScript.itemSlots[slotNumber].itemCount;
+		int targetItemCount = contScript.itemSlots[nearestSlotNumb].itemCount;
+
 		//Placing items on empty or same item
-		if (contScript.itemSlots[nearestSlotNumb].item == null || (contScript.itemSlots[nearestSlotNumb].item == containerScript.itemSlots[slotNumber].item && contScript.itemSlots[nearestSlotNumb].itemCount < contScript.maxItems)) {
+		if (targetItem == null || (targetItem == currentItem && targetItemCount < maxItemStack)) {
 			if (nearestSlotNumb != slotNumber || contScript != containerScript) {
-				contScript.itemSlots[nearestSlotNumb].item = containerScript.itemSlots[slotNumber].item;
+				targetItem = currentItem;
 
-				contScript.itemSlots[nearestSlotNumb].itemCount += containerScript.itemSlots[slotNumber].itemCount;
-				containerScript.itemSlots[slotNumber].itemCount = contScript.itemSlots[nearestSlotNumb].itemCount - inventoryScript.maxItems;
+				targetItemCount += currentItemCount;
+				currentItemCount = targetItemCount - maxItemStack;
 
-				if (contScript.itemSlots[nearestSlotNumb].itemCount >= contScript.maxItems) contScript.itemSlots[nearestSlotNumb].itemCount = contScript.maxItems;
-				if (containerScript.itemSlots[slotNumber].itemCount <= 0) containerScript.itemSlots[slotNumber].item = null;
-
-				contScript.UpdateSlots();
+				if (targetItemCount >= maxItemStack) targetItemCount = maxItemStack;
+				if (currentItemCount <= 0) currentItem = null;
 			}
 		}
 		//Switching items with different item
-		else if(contScript.itemSlots[nearestSlotNumb].item != containerScript.itemSlots[slotNumber].item && contScript.itemSlots[nearestSlotNumb].item != null) {
-			Item tempItem = contScript.itemSlots[nearestSlotNumb].item;
-			int tempItemCount = contScript.itemSlots[nearestSlotNumb].itemCount;
+		else if(targetItem != currentItem && targetItem != null) {
+			Item tempItem = targetItem;
+			int tempItemCount = targetItemCount;
 
-			contScript.itemSlots[nearestSlotNumb].item = containerScript.itemSlots[slotNumber].item;
-			containerScript.itemSlots[slotNumber].item = tempItem;
+			targetItem = currentItem;
+			currentItem = tempItem;
 
-			contScript.itemSlots[nearestSlotNumb].itemCount = containerScript.itemSlots[slotNumber].itemCount;
-			containerScript.itemSlots[slotNumber].itemCount = tempItemCount;
-
-			contScript.UpdateSlots();
+			targetItemCount = currentItemCount;
+			currentItemCount = tempItemCount;
 		}
+
+		containerScript.itemSlots[slotNumber].item = currentItem;
+		contScript.itemSlots[nearestSlotNumb].item = targetItem;
+		containerScript.itemSlots[slotNumber].itemCount = currentItemCount;
+		contScript.itemSlots[nearestSlotNumb].itemCount = targetItemCount;
+
+		contScript.UpdateSlots();
 	}
 
 	void DropItem() {
