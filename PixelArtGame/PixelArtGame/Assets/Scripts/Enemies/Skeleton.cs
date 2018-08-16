@@ -11,8 +11,7 @@ public class Skeleton : Enemy {
 
 	new void Start() {
 		attackHash = Animator.StringToHash("SkeletonAttack001");
-		idleHash = Animator.StringToHash("SkeletonIdle");
-		chaseHash = Animator.StringToHash("SkeletonChasing");
+		movingHash = Animator.StringToHash("SkeletonMoving");
 
 		base.Start();
 	}

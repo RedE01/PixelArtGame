@@ -25,40 +25,46 @@ public abstract class Enemy : MovableObject {
 	protected Rigidbody2D rb;
 	protected Vector2 movement;
 	protected float damageCounter = 0;
-	protected int attackHash, idleHash, chaseHash;
+	protected int attackHash, movingHash;
 	protected Animator animator;
+
+	private int xMoveHash, yMoveHash;
+	private float idleSpeedMultiplier = 0.1f;
 
 
 	public void Start() {
-		speed = normalSpeed;
+		speed = normalSpeed * idleSpeedMultiplier;
 		player = GameObject.FindGameObjectWithTag("Player");
 		playerScript = player.GetComponent<Player>();
 		rb = GetComponent<Rigidbody2D>();
 		target = transform.position;
 		animator = GetComponent<Animator>();
 
-		animator.SetBool(idleHash, true);
+		xMoveHash = Animator.StringToHash("SkeletonMoveX");
+		yMoveHash = Animator.StringToHash("SkeletonMoveY");
 	}
 
 	override public void Update() {
 		switch (enemyState) {
 			case EnemyState.Idle:
 				if (Vector2.Distance(transform.position, player.transform.position) < chasingRange) {
-					animator.SetBool(idleHash, false);
-					animator.SetBool(chaseHash, true);
+					animator.SetBool(movingHash, true);
+					speed = normalSpeed;
 					enemyState = EnemyState.Chasing;
 				}
 				break;
 
 			case EnemyState.Chasing:
+			animator.SetFloat(xMoveHash, movement.x);
+			animator.SetFloat(yMoveHash, movement.y);
 				if(Vector2.Distance(transform.position, target) < attackRange) {
-					animator.SetBool(chaseHash, false);
 					animator.SetBool(attackHash, true);
+					speed = 0;
 					enemyState = EnemyState.Attacking;
 				}
 				if (Vector2.Distance(transform.position, target) > chasingRange) {
-					animator.SetBool(chaseHash, false);
-					animator.SetBool(idleHash, true);
+					animator.SetBool(movingHash, false);
+					speed = normalSpeed * idleSpeedMultiplier;
 					enemyState = EnemyState.Idle;
 				}
 				break;
@@ -66,7 +72,8 @@ public abstract class Enemy : MovableObject {
 			case EnemyState.Attacking:
 				if (Vector2.Distance(transform.position, player.transform.position) > attackRange) {
 					animator.SetBool(attackHash, false);
-					animator.SetBool(chaseHash, true);
+					animator.SetBool(movingHash, true);
+					speed = normalSpeed;
 					enemyState = EnemyState.Chasing;
 					damageCounter = 0;
 				}
@@ -125,9 +132,9 @@ public abstract class Enemy : MovableObject {
 	void SetRandomTarget(float maxDist) {
 		target.x = Random.Range(0, maxDist) + transform.position.x - maxDist * 0.5f;
 		target.y = Random.Range(0, maxDist) + transform.position.y - maxDist * 0.5f;
-	}
 
-	public void SetSpeed(float speedMultiplier) {
-		speed = normalSpeed * speedMultiplier;
+		Vector2 lookDir = target - (Vector2)transform.position;
+		animator.SetFloat(xMoveHash, lookDir.x);
+		animator.SetFloat(yMoveHash, lookDir.y);
 	}
 }
