@@ -29,7 +29,6 @@ public class Attack : MonoBehaviour {
 
 		SwordParticles();
 		Invoke("HitEnemy", hitTime);
-		Invoke("EndAttack", attackTime);
 	}
 
 	public void DashAttack() {
@@ -47,6 +46,7 @@ public class Attack : MonoBehaviour {
 	}
 
 	private void HitEnemy() {
+		bool hit = false;
 		for (int i = enemiesInRange.Count - 1; i > -1; i--) {
 			if (enemiesInRange[i] == null) { //Removes enemy from list if it doesn't exist
 				enemiesInRange.RemoveAt(i);
@@ -55,8 +55,11 @@ public class Attack : MonoBehaviour {
 			if (enemiesInRange[i].Damage(transform.position, 5)) { //Deals damage to enemy and removes from list if destroyed
 				enemiesInRange.RemoveAt(i);
 			}
+			hit = true;
 			cameraScript.StartShake(.5f, 5, .05f);
 		}
+		float attackDelay = hit ? attackTime * 0.5f : attackTime;
+		Invoke("EndAttack", attackDelay);
 	}
 
 	void EndAttack() {

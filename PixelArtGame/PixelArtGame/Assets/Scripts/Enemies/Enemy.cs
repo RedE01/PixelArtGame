@@ -27,8 +27,8 @@ public abstract class Enemy : MovableObject {
 	protected float damageCounter = 0;
 	protected int attackHash, movingHash;
 	protected Animator animator;
+	protected int xMoveHash, yMoveHash, deadHash;
 
-	private int xMoveHash, yMoveHash;
 	private float idleSpeedMultiplier = 0.1f;
 
 
@@ -40,17 +40,21 @@ public abstract class Enemy : MovableObject {
 		target = transform.position;
 		animator = GetComponent<Animator>();
 
-		xMoveHash = Animator.StringToHash("SkeletonMoveX");
-		yMoveHash = Animator.StringToHash("SkeletonMoveY");
+		attackHash = Animator.StringToHash("Attack");
+		movingHash = Animator.StringToHash("Moving");
+		xMoveHash = Animator.StringToHash("MoveX");
+		yMoveHash = Animator.StringToHash("MoveY");
+		deadHash = Animator.StringToHash("Dead");
 	}
 
 	override public void Update() {
 		switch (enemyState) {
 			case EnemyState.Idle:
+				speed = normalSpeed * idleSpeedMultiplier;
 				if (Vector2.Distance(transform.position, player.transform.position) < chasingRange) {
 					animator.SetBool(movingHash, true);
-					speed = normalSpeed;
 					enemyState = EnemyState.Chasing;
+					speed = normalSpeed;
 				}
 				break;
 
@@ -59,12 +63,10 @@ public abstract class Enemy : MovableObject {
 			animator.SetFloat(yMoveHash, movement.y);
 				if(Vector2.Distance(transform.position, target) < attackRange) {
 					animator.SetBool(attackHash, true);
-					speed = 0;
 					enemyState = EnemyState.Attacking;
 				}
 				if (Vector2.Distance(transform.position, target) > chasingRange) {
 					animator.SetBool(movingHash, false);
-					speed = normalSpeed * idleSpeedMultiplier;
 					enemyState = EnemyState.Idle;
 				}
 				break;
@@ -73,7 +75,6 @@ public abstract class Enemy : MovableObject {
 				if (Vector2.Distance(transform.position, player.transform.position) > attackRange) {
 					animator.SetBool(attackHash, false);
 					animator.SetBool(movingHash, true);
-					speed = normalSpeed;
 					enemyState = EnemyState.Chasing;
 					damageCounter = 0;
 				}
@@ -120,6 +121,7 @@ public abstract class Enemy : MovableObject {
 				Destroy(gameObject, .5f);
 			}
 			enemyState = EnemyState.Dead;
+			animator.SetTrigger(deadHash);
 			return true;
 		}
 		return false;
@@ -136,5 +138,9 @@ public abstract class Enemy : MovableObject {
 		Vector2 lookDir = target - (Vector2)transform.position;
 		animator.SetFloat(xMoveHash, lookDir.x);
 		animator.SetFloat(yMoveHash, lookDir.y);
+	}
+
+	void SetSpeed(int spdMultiplier) {
+		speed = normalSpeed * spdMultiplier;
 	}
 }

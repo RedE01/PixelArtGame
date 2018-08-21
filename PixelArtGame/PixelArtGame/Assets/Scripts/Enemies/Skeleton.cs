@@ -9,13 +9,6 @@ public class Skeleton : Enemy {
 
 	Vector2 targetDir;
 
-	new void Start() {
-		attackHash = Animator.StringToHash("SkeletonAttack001");
-		movingHash = Animator.StringToHash("SkeletonMoving");
-
-		base.Start();
-	}
-
 	public override void Update() {
 		base.Update();
 
