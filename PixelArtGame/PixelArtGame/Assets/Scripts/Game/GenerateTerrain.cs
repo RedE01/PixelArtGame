@@ -32,6 +32,11 @@ public class GenerateTerrain : MonoBehaviour {
 	}
 
 	void Update() {
+		if(Input.GetKeyDown(KeyCode.O)) {
+			hillsTilemap1.gameObject.SetActive(!hillsTilemap1.gameObject.activeSelf);
+			hillsTilemap2.gameObject.SetActive(!hillsTilemap2.gameObject.activeSelf);
+			hillsTilemap3.gameObject.SetActive(!hillsTilemap3.gameObject.activeSelf);
+		}
 		GenerateAroundPlayer();
 	}
 
@@ -43,9 +48,9 @@ public class GenerateTerrain : MonoBehaviour {
 					GenerateChunk(dirtTilemap, dirtTiles, chunk, 90);
 					GenerateChunk(groundTilemap, grassTiles, chunk, 75);
 
-					GenerateHills(hillsTilemap1, chunk, 0.45f);
-					GenerateHills(hillsTilemap2, chunk, 0.6f);
-					GenerateHills(hillsTilemap3, chunk, 0.7f);
+					GenerateHills(hillsTilemap1, chunk, 0.45f, dirtTiles[0]);
+					GenerateHills(hillsTilemap2, chunk, 0.6f, dirtTiles[1]);
+					GenerateHills(hillsTilemap3, chunk, 0.7f, dirtTiles[2]);
 
 					GenerateTrees(chunk);
 					return;
@@ -109,7 +114,7 @@ public class GenerateTerrain : MonoBehaviour {
 		}
 	}
 
-	void GenerateHills(Tilemap tilemap, Vector3Int chunk, float checkOver) {
+	void GenerateHills(Tilemap tilemap, Vector3Int chunk, float checkOver, Tile t) {
 		Vector3Int pos = new Vector3Int(chunk.x * chunkWidth, chunk.y * chunkWidth, 0);
 
 		for (int x = 0; x < chunkWidth; x++) {
@@ -118,6 +123,7 @@ public class GenerateTerrain : MonoBehaviour {
 				float yCoord = (float)y / (float)chunkWidth * (float)scale + (float)chunk.y * scale + worldSize + seed;
 
 				if (!CheckPerlinNoiseAtPos(xCoord, yCoord, 0, 0, checkOver, x, y, pos)) {
+					groundTilemap.SetTile(new Vector3Int(x + pos.x, y + pos.y, 0), t);
 					bool below = false;
 					bool right = false;
 					bool left = false;
