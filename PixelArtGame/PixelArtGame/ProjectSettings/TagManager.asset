@@ -10,6 +10,7 @@ TagManager:
   - Portal
   - PlayerHand
   - Chest
+  - JobSign
   layers:
   - Default
   - TransparentFX

@@ -16,7 +16,7 @@ public class Player : MovableObject {
 	public PlayerState playerState = PlayerState.Default;
 
 	public Animator animator;
-	public float speed, dashChargeupTime;
+	public float walkingSpeed, runningSpeed, dashChargeupTime;
 
 	[HideInInspector]
 	public Vector2 facing;
@@ -90,7 +90,12 @@ public class Player : MovableObject {
 	}
 
 	private void Movement() {
-		movement = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical")); ;
+		movement = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+
+		float speed = walkingSpeed;
+		if(Input.GetKey(KeyCode.LeftShift)) {
+			speed = runningSpeed;
+		}
 
 		if (movement.magnitude > 1) {
 			movement = movement.normalized;

@@ -28,7 +28,7 @@ public class GenerateTerrain : MonoBehaviour {
 
 	void Start() {
 		player = GameObject.FindGameObjectWithTag("Player").transform;
-		seed = Random.Range(0, 10000);
+		seed = Random.Range(0, 99999);
 		Debug.Log(seed);
 
 		GenerateAroundPlayer();

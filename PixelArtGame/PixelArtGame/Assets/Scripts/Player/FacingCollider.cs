@@ -17,6 +17,9 @@ public class FacingCollider : MonoBehaviour {
 		if (collision.gameObject.CompareTag("Chest")) {
 			collision.gameObject.GetComponent<Chest>().interactable = true;
 		}
+		if (collision.gameObject.CompareTag("JobSign")) {
+			collision.gameObject.GetComponent<JobSign>().interactable = true;
+		}
 	}
 
 	void OnTriggerExit2D(Collider2D collision) {
@@ -25,6 +28,9 @@ public class FacingCollider : MonoBehaviour {
 		}
 		if (collision.gameObject.CompareTag("Chest")) {
 			collision.gameObject.GetComponent<Chest>().interactable = false;
+		}
+		if (collision.gameObject.CompareTag("JobSign")) {
+			collision.gameObject.GetComponent<JobSign>().interactable = false;
 		}
 	}
 }
