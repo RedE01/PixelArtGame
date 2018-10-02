@@ -42,14 +42,20 @@ public class InventoryItem : MonoBehaviour {
 		transform.position = Input.mousePosition;
 		transform.parent.SetAsLastSibling();
 		transform.parent.parent.SetAsLastSibling();
+		containerScript.description.gameObject.SetActive(false);
 	}
 
 	public void MouseEnter() {
 		mouseOver = true;
+		containerScript.description.gameObject.SetActive(true);
+		containerScript.description.GetChild(0).GetComponent<Text>().text = containerScript.itemSlots[slotNumber].item.description;
+		containerScript.description.SetAsLastSibling();
+		containerScript.description.position = transform.position;
 	}
 
 	public void MouseLeave() {
 		mouseOver = false;
+		containerScript.description.gameObject.SetActive(false);
 	}
 
 	public void ItemRelease() {

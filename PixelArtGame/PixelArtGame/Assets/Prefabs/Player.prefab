@@ -185,8 +185,8 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1076437112664980}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -1, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -1.6878233, y: 1.0308261, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4700666396774908}
@@ -424,7 +424,8 @@ MonoBehaviour:
   objectSpriteRenderer: {fileID: 212041415296131040}
   playerState: 0
   animator: {fileID: 95901739682619004}
-  speed: 160
+  walkingSpeed: 160
+  runningSpeed: 220
   dashChargeupTime: 0.5
   facing: {x: 0, y: 0}
 --- !u!114 &114067793905865904
@@ -445,6 +446,7 @@ MonoBehaviour:
   playerScript: {fileID: 114056793145663176}
   parentObject: {fileID: 0}
   inventoryObject: {fileID: 0}
+  description: {fileID: 0}
   characterSlots:
   - {fileID: 0}
   - {fileID: 0}
@@ -481,6 +483,7 @@ MonoBehaviour:
   playerScript: {fileID: 114056793145663176}
   parentObject: {fileID: 0}
   inventoryObject: {fileID: 0}
+  description: {fileID: 0}
   hotbarKeyPressed: 0
 --- !u!114 &114381748699634974
 MonoBehaviour:
@@ -500,6 +503,7 @@ MonoBehaviour:
   playerScript: {fileID: 114056793145663176}
   parentObject: {fileID: 0}
   inventoryObject: {fileID: 0}
+  description: {fileID: 0}
   armorSlots: 4
   helmetSlot: {fileID: 0}
   chestplateSlot: {fileID: 0}

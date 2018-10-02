@@ -13,6 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemType: 1
   name: Axe
+  description: Can cut down trees.
   inventorySprite: {fileID: 21300000, guid: 3b2eaafdcb8ec89478cb86fe92c640d7, type: 3}
   equippedSprite: {fileID: 21300000, guid: 694b102eb72b98f438cacb788ca15a2a, type: 3}
   stackSize: 1

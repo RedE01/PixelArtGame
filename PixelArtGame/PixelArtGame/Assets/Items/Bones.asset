@@ -13,6 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemType: 0
   name: 
+  description: Remains from a spooky sccary skeleton.
   inventorySprite: {fileID: 21300000, guid: 0add3fc87f931e5469025ff6427ede9a, type: 3}
   equippedSprite: {fileID: 21300000, guid: 0add3fc87f931e5469025ff6427ede9a, type: 3}
   stackSize: 10

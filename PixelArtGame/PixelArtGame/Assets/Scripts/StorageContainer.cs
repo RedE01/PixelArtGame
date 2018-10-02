@@ -17,6 +17,7 @@ public abstract class StorageContainer : MonoBehaviour {
 
 	public GameObject parentObject;
 	public GameObject inventoryObject;
+	public RectTransform description;
 
 	protected virtual void Start() {
 		Initialize();
@@ -28,6 +29,7 @@ public abstract class StorageContainer : MonoBehaviour {
 	protected void Initialize() {
 		itemSlots = new ItemSlot[slots];
 		slotSize = (int)slot.GetComponent<RectTransform>().sizeDelta.x;
+		description.gameObject.SetActive(false);
 	}
 
 	protected void CreateSlotGrid(string slotName) {

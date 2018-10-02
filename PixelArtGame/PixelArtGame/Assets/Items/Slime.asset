@@ -13,6 +13,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemType: 0
   name: Slime
+  description: Slime from a.... slime.
   inventorySprite: {fileID: 21300000, guid: b51d513cde3324f4b80cfa421863e470, type: 3}
   equippedSprite: {fileID: 21300000, guid: b51d513cde3324f4b80cfa421863e470, type: 3}
+  stackSize: 10
   pickupRadius: 0.4

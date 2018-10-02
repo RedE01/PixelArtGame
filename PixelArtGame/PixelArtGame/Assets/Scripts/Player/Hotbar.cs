@@ -50,6 +50,7 @@ public class Hotbar : StorageContainer {
 					hotbarKeyPressed = i;
 					selected = i;
 					UpdateHotbar();
+					description.gameObject.SetActive(false);
 				}
 			}
 		}

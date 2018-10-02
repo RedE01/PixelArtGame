@@ -14,6 +14,7 @@ public class Item : ScriptableObject {
 	public ItemType itemType;
 
 	public new string name;
+	public string description;
 	public Sprite inventorySprite;
 	public Sprite equippedSprite;
 	public int stackSize = 10;

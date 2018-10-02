@@ -40,6 +40,8 @@ public class Inventory : StorageContainer {
 			parentObject.SetActive(false);
 			playerScript.playerState = Player.PlayerState.Default;
 			UpdateSlots();
+
+			description.gameObject.SetActive(false);
 		}
 
 	}
